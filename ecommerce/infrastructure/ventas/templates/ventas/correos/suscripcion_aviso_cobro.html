@@ -1,0 +1,10 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Paga tu próxima entrega{% endblock %}
+{% block titulo_visible %}Paga tu próxima entrega{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Se acerca tu próxima entrega de <strong>{{ plan.nombre }}</strong>, el <strong>{{ fecha_ciclo }}</strong>. Para recibirla, paga <strong>{{ total }}</strong>{% if costo_envio != "$0" %} (incluye {{ costo_envio }} de despacho){% endif %} hasta ese día. Si no se paga a tiempo, esa entrega no se envía y tu suscripción sigue con la siguiente.</p>
+<p style="margin:20px 0;"><a href="{{ url_pagar }}" style="display:inline-block; padding:12px 20px; background-color:#1d4ed8; color:#ffffff; text-decoration:none; border-radius:6px; font-weight:bold;">Pagar esta entrega</a></p>
+{% include "ventas/correos/_transferencia.html" %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Entrega: {{ entrega }}</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

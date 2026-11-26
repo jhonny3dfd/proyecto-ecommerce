@@ -1,0 +1,79 @@
+/* Página legal pública (RF-03.5) con el estilo editorial */
+
+.legal-main {
+  min-height: 70vh;
+  padding: clamp(40px, 7vw, 96px) var(--margen-lateral) var(--espacio-seccion);
+  background: var(--color-background);
+}
+
+.legal {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.legal-titulo {
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  margin-bottom: 12px;
+}
+
+.legal-fecha {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.legal-estado {
+  color: var(--color-muted);
+}
+
+/* Contenido del editor: la tipografía de la tienda en vez de la de Quill */
+.legal-contenido.ql-snow .ql-editor {
+  height: auto;
+  padding: 0;
+  overflow: visible;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.legal-contenido.ql-snow .ql-editor p,
+.legal-contenido.ql-snow .ql-editor ol,
+.legal-contenido.ql-snow .ql-editor ul {
+  margin-bottom: 1em;
+}
+
+.legal-contenido.ql-snow .ql-editor h1,
+.legal-contenido.ql-snow .ql-editor h2,
+.legal-contenido.ql-snow .ql-editor h3 {
+  margin: 1.6em 0 0.5em;
+  font-family: var(--fuente-titulos);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.legal-contenido.ql-snow .ql-editor h1 { font-size: 2rem; }
+.legal-contenido.ql-snow .ql-editor h2 { font-size: 1.6rem; }
+.legal-contenido.ql-snow .ql-editor h3 { font-size: 1.3rem; }
+
+.legal-contenido.ql-snow .ql-editor a {
+  color: var(--color-primary);
+  text-underline-offset: 3px;
+}
+
+/* Página no encontrada o error de conexión */
+.legal-error {
+  text-align: center;
+}
+
+.legal-error .legal-titulo {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+.legal-error p {
+  margin-bottom: 32px;
+  color: var(--color-muted);
+}

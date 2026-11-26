@@ -1,0 +1,23 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}{% if es_retiro_local %}Tu pedido #{{ orden.id }} está listo para retirar{% else %}Tu pedido #{{ orden.id }} va en camino{% endif %}{% endblock %}
+{% block titulo_visible %}{% if es_retiro_local %}¡Tu pedido está listo para retirar!{% else %}¡Tu pedido va en camino!{% endif %}{% endblock %}
+{% block contenido %}
+{% if es_retiro_local %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Tu pedido #{{ orden.id }} ya está listo. Puedes retirarlo presentando tu número de orden.
+</p>
+{% elif es_entrega_coordinada %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  {{ tienda }} va en camino a entregar tu pedido #{{ orden.id }} en la dirección que indicaste.
+</p>
+{% else %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  {{ tienda }} despachó tu pedido #{{ orden.id }}{% if transportista %} con {{ transportista }}{% endif %}.
+  {% if numero_ot %}Número de seguimiento: <strong>{{ numero_ot }}</strong>.{% endif %}
+</p>
+<p style="margin:20px 0;">
+  <a href="{{ url_seguimiento }}" style="display:inline-block; padding:12px 22px; background-color:#1d4ed8; color:#ffffff; text-decoration:none; border-radius:6px; font-weight:bold;">Seguir mi pedido</a>
+</p>
+{% endif %}
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

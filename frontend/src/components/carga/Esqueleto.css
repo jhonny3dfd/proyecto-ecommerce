@@ -1,0 +1,139 @@
+/* Esqueletos de carga: bloques con la forma de lo que viene y una franja de brillo que los recorre.
+   Los colores salen del tema (texto sobre superficie), así que sirven para todas las paletas */
+.esqueleto {
+  --esqueleto-base: color-mix(in srgb, var(--color-text) 9%, var(--color-surface));
+  --esqueleto-brillo: color-mix(in srgb, var(--color-text) 3%, var(--color-surface));
+  display: block;
+  max-width: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--esqueleto-base) 40%, var(--esqueleto-brillo) 50%, var(--esqueleto-base) 60%);
+  background-size: 300% 100%;
+  animation: esqueleto-brillo 1.5s ease-in-out infinite;
+}
+
+.esqueleto--circulo {
+  border-radius: 50%;
+}
+
+.esqueleto--boton {
+  border-radius: var(--radio, 4px);
+}
+
+/* La barra lateral del panel es oscura: bloques claros y translúcidos */
+.admin-barra .esqueleto {
+  --esqueleto-base: rgb(243 239 233 / 12%);
+  --esqueleto-brillo: rgb(243 239 233 / 22%);
+}
+
+/* ---------- Composiciones (EsqueletosPanel.jsx) ---------- */
+
+.esqueleto-tabla {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.esqueleto-tabla-fila {
+  display: grid;
+  grid-template-columns: repeat(var(--columnas), minmax(0, 1fr));
+  gap: 16px;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.esqueleto-tabla-fila:last-child {
+  border-bottom: 0;
+}
+
+.esqueleto-tabla-fila--encabezado {
+  background: var(--color-secondary);
+  border-bottom-width: 2px;
+}
+
+.esqueleto-lista {
+  display: grid;
+  gap: 16px;
+}
+
+.esqueleto-tarjeta {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.esqueleto-botones,
+.esqueleto-dashboard-filtro,
+.esqueleto-dashboard-indicadores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.esqueleto-botones {
+  margin-top: 6px;
+}
+
+.esqueleto-dashboard-filtro {
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.esqueleto-campo {
+  display: grid;
+  gap: 6px;
+}
+
+.esqueleto-dashboard-indicadores {
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.esqueleto-dashboard-seccion {
+  margin-bottom: 30px;
+  padding: 25px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+/* ---------- Tienda (EsqueletosTienda.jsx) ---------- */
+
+/* La portada de la landing es oscura, como la barra del panel */
+.portada .esqueleto {
+  --esqueleto-base: rgb(255 255 255 / 14%);
+  --esqueleto-brillo: rgb(255 255 255 / 26%);
+}
+
+.esqueleto-columna {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.esqueleto-pagos {
+  display: grid;
+  gap: 12px;
+}
+
+/* La franja entra por la izquierda y sale por la derecha */
+@keyframes esqueleto-brillo {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+/* La regla global de index.css solo acorta la animación, y en una infinita eso parpadea: aquí se apaga */
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto {
+    animation: none;
+  }
+}
+
+/* En alto contraste el fondo desaparece: el contorno mantiene la forma */
+@media (forced-colors: active) {
+  .esqueleto {
+    border: 1px solid GrayText;
+  }
+}

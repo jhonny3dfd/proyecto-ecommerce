@@ -1,0 +1,1148 @@
+/* Índice lateral de la vista Configuración del panel de administración */
+.config-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* Fijo al bajar y con su propio desplazamiento: con todas las secciones es más alto que la pantalla, y sin esto
+   el final del índice quedaba fuera de alcance. Mismo criterio que la barra lateral del panel (.admin-barra) */
+.config-indice {
+  flex: 0 0 220px;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-right: 6px;
+}
+
+.config-indice ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid #e5e7eb;
+}
+
+/* Índice agrupado: el título de cada grupo sobre la lista de sus secciones */
+.config-indice ul.config-indice-grupos {
+  border-left: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.config-indice-grupo {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* En la página, cada grupo abre con su título y queda separado del siguiente */
+.config-grupo + .config-grupo {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 2px solid var(--color-border);
+}
+
+/* Subtítulos dentro de una sección (h5, bajo el h4 de la sección): el mismo aspecto que tenían como h4 */
+.config-secciones h5 {
+  font-family: var(--fuente-titulos);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0 0 0.5em;
+}
+
+.config-grupo-titulo {
+  margin: 0 0 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.config-indice button {
+  display: block;
+  width: 100%;
+  margin-left: -2px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--color-text, #374151);
+  cursor: pointer;
+}
+
+.config-indice button:hover,
+.config-indice button:focus-visible {
+  border-left-color: var(--color-primary, #2563eb);
+  color: var(--color-primary, #2563eb);
+}
+
+/* La sección que se está leyendo: color, grosor y la línea de la izquierda (no depende solo del color) */
+.config-indice button[aria-current='location'] {
+  border-left-color: var(--color-primary, #2563eb);
+  color: var(--color-primary, #2563eb);
+  font-weight: 600;
+}
+
+.config-secciones {
+  flex: 1;
+  min-width: 0;
+  /* Formularios: títulos, etiquetas y textos alineados con el inicio de los campos (el panel centra por defecto) */
+  text-align: left;
+}
+
+/* Deja aire sobre el título al llegar desde el índice; el foco es programático (tabIndex -1) */
+.config-titulo {
+  scroll-margin-top: 20px;
+}
+
+.config-titulo:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* En pantallas angostas el índice va arriba del contenido y deja de ser fijo */
+@media (max-width: 900px) {
+  /* En columna, los hijos se estiran al ancho disponible (con flex-start tomarían el ancho de su contenido) */
+  .config-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .config-indice {
+    position: static;
+    flex-basis: auto;
+    width: 100%;
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+  }
+}
+
+/* ======================================================================
+   Estructura del panel (estilo editorial, RNF-01: también en móvil)
+   ====================================================================== */
+
+.admin {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+/* ---------- Barra lateral: mismos colores que el footer de la tienda ---------- */
+
+.admin-barra {
+  flex: 0 0 248px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+  background: var(--color-footer);
+  color: #F3EFE9;
+}
+
+.admin-marca {
+  padding: 0 24px 28px;
+}
+
+.admin-marca-nombre {
+  display: block;
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.admin-marca-titulo {
+  margin: 8px 0 0;
+  font-family: var(--fuente-texto);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B9B1A6;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 24px;
+  border: none;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: #D9D2C8;
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.admin-nav-item:hover {
+  background: rgb(255 255 255 / 6%);
+  color: #FFFFFF;
+}
+
+.admin-nav-item[aria-current='page'] {
+  border-left-color: #F3EFE9;
+  background: rgb(255 255 255 / 10%);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.admin-nav-item:focus-visible {
+  outline: 2px solid #F3EFE9;
+  outline-offset: -4px;
+}
+
+.admin-nav-item--externo {
+  justify-content: space-between;
+}
+
+.admin-nav-separador {
+  height: 1px;
+  margin: 16px 24px;
+  background: rgb(243 239 233 / 15%);
+}
+
+/* ---------- Zona principal ---------- */
+
+.admin-principal {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  padding: 32px clamp(20px, 3vw, 48px) 24px;
+}
+
+.admin-topbar .antetitulo {
+  margin-bottom: 6px;
+}
+
+.admin-topbar-saludo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+
+.admin-topbar-ayuda {
+  font-size: 0.85rem;
+}
+
+.admin-contenido {
+  flex: 1;
+  margin: 0 clamp(12px, 3vw, 48px) clamp(20px, 3vw, 48px);
+  padding: clamp(20px, 3vw, 40px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.editor-legal .ql-editor { min-height: 280px; font-family: var(--fuente-texto); }
+.editor-legal .ql-toolbar,
+.editor-legal .ql-container { border-color: var(--color-control-border); }
+.editor-legal .ql-editor:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -3px; }
+
+.admin-titulo {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin: 0 0 24px;
+}
+
+.admin-encabezado-vista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.admin-encabezado-vista .admin-titulo {
+  margin: 0;
+}
+
+.admin-descripcion {
+  max-width: 60ch;
+  margin-bottom: 16px;
+}
+
+.admin-separador {
+  margin: 36px 0;
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.config-titulo {
+  font-size: 1.5rem;
+  margin: 0 0 16px;
+}
+
+/* ---------- Indicadores del dashboard ---------- */
+
+.admin-indicador {
+  flex: 1;
+  min-width: 220px;
+  padding: 24px;
+  background: var(--color-secondary);
+}
+
+.admin-indicador-etiqueta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--color-muted);
+}
+
+.admin-indicador-etiqueta p {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.admin-indicador-valor {
+  margin-bottom: 6px;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  font-variant-numeric: lining-nums;
+}
+
+.admin-indicador-descripcion {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* ---------- Formularios del panel ---------- */
+
+.admin-formulario {
+  display: grid;
+  gap: 18px;
+  max-width: 640px;
+}
+
+.admin-fila {
+  display: flex;
+  gap: 16px;
+}
+
+.admin-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-campo--ancho {
+  flex: 3;
+}
+
+.admin-campo label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.admin-casilla {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.admin-casilla input {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+/* Texto de ayuda bajo un campo (aria-describedby) y error del backend para ese campo */
+.admin-ayuda {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* Alineada con el texto de una casilla (18px de la casilla + 10px de separación) */
+.admin-ayuda--sangria {
+  margin: 4px 0 0 28px;
+}
+
+/* Grupo de opciones (radios) con su pregunta como legend; la ayuda de cada opción va bajo su texto */
+.admin-opciones {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.admin-opciones legend {
+  margin-bottom: 4px;
+  padding: 0;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.admin-opcion-ayuda {
+  display: block;
+  margin-top: 2px;
+}
+
+/* Recuadro de orientación (ej. qué documento tributario emitir en cada caso) */
+.admin-guia {
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-background);
+}
+
+.admin-guia-titulo {
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.admin-guia ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.admin-error-campo {
+  font-size: 0.85rem;
+  color: #B91C1C;
+}
+
+.admin-campo [aria-invalid='true'] {
+  border-color: #B91C1C;
+}
+
+.admin-aviso {
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.admin-aviso--exito {
+  background: #E7F3EA;
+  color: #1E5631;
+}
+
+.admin-aviso--error {
+  background: #FBEAE7;
+  color: #8A2418;
+}
+
+/* Base común para los gestores (pedidos, medios de pago, promociones...): sus estilos propios mandan */
+.admin-contenido input[type='text'],
+.admin-contenido input[type='number'],
+.admin-contenido input[type='email'],
+.admin-contenido input[type='date'],
+.admin-contenido input[type='password'],
+.admin-contenido input:not([type]),
+.admin-contenido select,
+.admin-contenido textarea {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.admin-contenido input:focus-visible,
+.admin-contenido select:focus-visible,
+.admin-contenido textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+/* Cada tabla se desplaza de lado dentro de su contenedor (overflow-x: auto). Sin overflow-wrap: normal hereda el
+   anywhere de .admin-contenido y en celular se aprieta al ancho de la pantalla cortando las palabras letra por letra */
+.admin-contenido table {
+  border-collapse: collapse;
+  overflow-wrap: normal;
+}
+
+/* Por defecto un fieldset no se encoge más que su contenido (min-width: min-content) y en celular empuja la
+   página hacia el costado; las imágenes tampoco pueden pasar del ancho disponible */
+.admin-contenido fieldset {
+  min-width: 0;
+}
+
+.admin-contenido img,
+.admin-contenido select {
+  max-width: 100%;
+}
+
+/* Galería de un producto: el input de archivos está oculto a la vista y su foco se muestra en la zona */
+.galeria-input:focus-visible + .galeria-zona {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-contenido th {
+  font-family: var(--fuente-texto);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ---------- Pantallas angostas: la barra lateral pasa arriba ---------- */
+
+@media (max-width: 900px) {
+  .admin {
+    flex-direction: column;
+  }
+
+  .admin-barra {
+    position: static;
+    flex: none;
+    height: auto;
+    padding: 16px 0 0;
+  }
+
+  .admin-marca {
+    padding: 0 16px 12px;
+  }
+
+  /* Las secciones quedan en una fila que se desplaza de lado (sin scroll horizontal en la página) */
+  .admin-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .admin-nav-item {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 0 16px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .admin-nav-item[aria-current='page'] {
+    border-bottom-color: #F3EFE9;
+  }
+
+  .admin-nav-separador {
+    display: none;
+  }
+
+  .admin-topbar {
+    padding: 20px 16px 12px;
+  }
+
+  .admin-fila {
+    flex-direction: column;
+  }
+}
+
+/* ---------- Selector de paletas (RF-01.2) ---------- */
+
+.selector-paletas-opciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+  gap: 16px;
+  max-width: 820px;
+}
+
+.selector-paleta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--transicion);
+}
+
+.selector-paleta:hover {
+  border-color: var(--color-text);
+}
+
+.selector-paleta[aria-pressed='true'] {
+  border: 2px solid var(--color-text);
+  padding: 11px;
+}
+
+.selector-paleta-vista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid rgb(0 0 0 / 6%);
+}
+
+.selector-paleta-letras {
+  font-family: var(--fuente-titulos);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.selector-paleta-boton {
+  padding: 5px 8px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Vista del catálogo (RF-01.4): un esquema de cómo quedan los productos */
+.selector-vista-esquema {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+.selector-vista-producto {
+  aspect-ratio: 3 / 4;
+  background: var(--color-muted);
+  opacity: 0.45;
+}
+
+.selector-vista-esquema--lista {
+  grid-template-columns: 1fr;
+}
+
+.selector-vista-esquema--lista .selector-vista-producto {
+  display: flex;
+  gap: 6px;
+  aspect-ratio: auto;
+  height: 18px;
+  background: none;
+  opacity: 1;
+}
+
+.selector-vista-foto {
+  flex: 0 0 18px;
+  background: var(--color-muted);
+  opacity: 0.45;
+}
+
+.selector-vista-texto {
+  flex: 1;
+  background: var(--color-muted);
+  opacity: 0.25;
+}
+
+.selector-paleta-nombre {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.selector-paleta-muestras {
+  display: flex;
+  gap: 4px;
+}
+
+.selector-paleta-muestras span {
+  flex: 1;
+  height: 14px;
+  border: 1px solid rgb(0 0 0 / 10%);
+}
+
+/* ---------- Selector de tipografía (RF-01.2): mismas tarjetas que las paletas ---------- */
+
+.selector-tipografia-vista {
+  display: grid;
+  gap: 6px;
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+/* Muestra con el tamaño de un título de sección; cada combinación ya trae su ajuste de tamaño */
+.selector-tipografia-titulo {
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.selector-tipografia-texto {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.selector-tipografia-descripcion {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.selector-paletas-acciones {
+  margin: 20px 0 12px;
+}
+
+/* Cotizaciones (GestorCotizaciones.jsx): una tarjeta por solicitud, legible también en el celular */
+.cotizaciones-lista {
+  display: grid;
+  gap: 16px;
+}
+
+.cotizacion-tarjeta {
+  padding: 18px 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.cotizacion-tarjeta-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cotizacion-tarjeta-encabezado h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+}
+
+.cotizacion-tarjeta-fecha {
+  margin: 4px 0 12px;
+  font-size: 0.85rem;
+}
+
+.cotizacion-tarjeta-datos {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.cotizacion-tarjeta-datos dt {
+  color: var(--color-muted);
+}
+
+.cotizacion-tarjeta-datos dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.cotizacion-tarjeta-datos a {
+  color: var(--color-primary);
+}
+
+@media (max-width: 600px) {
+  .cotizacion-tarjeta-datos {
+    grid-template-columns: 1fr;
+  }
+
+  .cotizacion-tarjeta-datos dd {
+    margin-bottom: 6px;
+  }
+}
+
+/* ---------- Blog: lista de publicaciones y formulario ---------- */
+
+.blog-admin-apagado {
+  background: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.blog-admin-lista {
+  display: grid;
+  gap: 12px;
+}
+
+.blog-admin-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+}
+
+.blog-admin-item-texto {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.blog-admin-item-titulo {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.blog-admin-estado {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.blog-admin-estado--publicada {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.publicacion-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+
+.publicacion-acciones .boton,
+.blog-admin-item .boton {
+  padding: 0.7rem 1.25rem;
+}
+
+/* El editor de texto necesita más ancho que los formularios cortos del panel */
+.publicacion-formulario {
+  max-width: 860px;
+}
+
+/* Rótulo de la portada y del editor, igual que los <label> de .admin-campo */
+.publicacion-etiqueta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Con .admin-contenido para ganarle a ".admin-contenido img { max-width: 100% }" */
+.admin-contenido .publicacion-portada {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-accent);
+}
+
+.publicacion-editor .ql-toolbar,
+.publicacion-editor .ql-container {
+  border-color: var(--color-border);
+}
+
+/* Quill trae height: 100%, que aquí se desborda sobre los botones: el editor crece con el texto */
+.publicacion-editor .ql-container {
+  height: auto;
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+}
+
+.publicacion-editor .ql-editor {
+  height: auto;
+  min-height: 260px;
+}
+
+/* "Elegir portada" es el <label> del input de archivo: se ve como botón, no como rótulo de campo */
+.publicacion-formulario .admin-campo label.boton {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  color: var(--color-text);
+}
+
+.publicacion-fotos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.publicacion-foto {
+  display: grid;
+  gap: 8px;
+}
+
+.publicacion-foto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--color-accent);
+}
+
+.publicacion-foto .boton {
+  padding: 0.55rem 0.75rem;
+}
+
+.cotizaciones-paginacion {
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* Reseñas (GestorResenas.jsx): filtros por estado y las calificaciones de cada reseña */
+.resenas-filtros {
+  margin-bottom: 20px;
+}
+
+.resenas-filtros .boton {
+  padding: 0.7rem 1.25rem;
+}
+
+.resenas-filtros .boton[aria-pressed='true'] {
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+/* Cada término con su descripción sigue en la grilla de la tarjeta */
+.resena-calificacion {
+  display: contents;
+}
+
+.resena-comentario {
+  display: block;
+  margin-top: 4px;
+}
+
+.resena-acciones {
+  margin-top: 16px;
+}
+
+.resena-acciones .boton {
+  padding: 0.7rem 1.25rem;
+}
+
+/* Fotos y logo: la ayuda de cada opción queda alineada con el texto de su casilla */
+.presentacion-ayuda {
+  margin: 4px 0 0 28px;
+}
+
+.orden-catalogo-campos { border: 0; padding: 0; min-width: 0; }
+.orden-catalogo-lista { padding-left: 1.5rem; }
+.orden-catalogo-lista li { margin: 16px 0; overflow-wrap: anywhere; }
+.orden-catalogo-acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.orden-catalogo-acciones button { min-height: 44px; max-width: 100%; white-space: normal; }
+
+/* ---------- Suscripciones (pedido de un cliente, opcional): planes, formulario y suscriptores ---------- */
+
+.config-secciones .plan-lista-titulo,
+.config-secciones .plan-formulario-titulo {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.plan-formulario {
+  max-width: 760px;
+}
+
+.plan-resumen {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.plan-elegibles,
+.plan-elegibles-grupo {
+  min-width: 0;
+}
+
+.plan-elegibles-grupo legend {
+  font-weight: 500;
+}
+
+.plan-casillas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px 20px;
+}
+
+/* La lista de productos puede ser larga: se recorre dentro de su recuadro */
+.plan-casillas--productos {
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid var(--color-control-border);
+  border-radius: 4px;
+  grid-template-columns: 1fr;
+}
+
+.plan-casillas .admin-casilla {
+  overflow-wrap: anywhere;
+}
+
+.suscriptores-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.suscriptores-buscar {
+  grid-column: span 2;
+}
+
+.suscriptores-buscar-fila {
+  display: flex;
+  gap: 8px;
+}
+
+.suscriptores-buscar-fila input {
+  flex: 1;
+  min-width: 0;
+}
+
+.suscriptores-pendiente {
+  grid-column: 1 / -1;
+}
+
+.suscriptores-total {
+  min-height: 1.5em;
+  margin: 0 0 12px;
+}
+
+.pedido-suscripcion {
+  display: block;
+  width: max-content;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .suscriptores-buscar {
+    grid-column: 1 / -1;
+  }
+}
+
+.config-secciones .plan-item-titulo {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+.cumpleanos-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cumpleanos-lista dd {
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.cumpleanos-lista dt {
+  font-weight: 600;
+}
+
+.cumpleanos-regalo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.cumpleanos-regalo input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+}
+
+/* ---------- Renombrar o unir categorías (RF-03.2) ---------- */
+
+.categorias-lista {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+}
+
+.categorias-item {
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.categorias-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.categorias-nombre {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.categorias-fila .boton,
+.categorias-formulario .boton {
+  padding: 0.7rem 1.25rem;
+}
+
+.categorias-formulario {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+/* ---------- Fotos de Sobre mí (pedido de un cliente) ---------- */
+
+.sobre-mi-fotos-panel {
+  min-width: 0;
+}
+
+.sobre-mi-fotos-panel-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 20px;
+}
+
+.sobre-mi-foto-panel {
+  min-width: 0;
+}
+
+.admin-contenido .sobre-mi-foto-vista {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--color-secondary);
+}

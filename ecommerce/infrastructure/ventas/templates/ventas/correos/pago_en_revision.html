@@ -1,0 +1,10 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Recibimos el pago de tu pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}Recibimos tu pago{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Recibimos el pago de tu pedido #{{ orden.id }}. Antes de prepararlo, {{ tienda }} necesita revisarlo
+  y se pondrá en contacto contigo a este correo.
+</p>
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

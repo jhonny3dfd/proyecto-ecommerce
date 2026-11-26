@@ -1,0 +1,530 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-content {
+  max-width: calc(var(--ancho-contenido) + 2 * var(--margen-lateral));
+  margin: 0 auto;
+  padding: 14px var(--margen-lateral);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* ---------- Logos (RN-01) ---------- */
+
+.header-marcas {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.header-marca-negocio {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.header-logo-negocio {
+  height: 52px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+.header-nombre-tienda {
+  font-family: var(--fuente-titulos);
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.header-separador {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border);
+}
+
+/* Tamaño destacado: misma altura que el logo del negocio */
+.header-logo-universidad {
+  height: 52px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
+
+/* ---------- Navegación ---------- */
+
+.header-nav,
+.header-links,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-width: 0;
+}
+
+.header-nav {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.header-links {
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  position: relative;
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.header-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color var(--transicion);
+}
+
+.header-links a:hover,
+.header-links a.active {
+  color: var(--color-text);
+}
+
+.header-actions > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.header .menu-usuario,
+.header .carrito-compras {
+  position: relative;
+  min-width: 0;
+}
+
+.header .menu-usuario-saludo {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header .carrito-panel,
+.header .menu-usuario-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.header .carrito-panel {
+  width: 320px;
+}
+
+.header .menu-usuario-panel {
+  width: 280px;
+}
+
+@media (max-width: 1023px) {
+  .header-content,
+  .header-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-links {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    position: static;
+  }
+
+  .header-content {
+    flex-direction: column;
+    padding: 12px 16px;
+  }
+
+  .header-logo-negocio,
+  .header-logo-universidad {
+    height: 44px;
+  }
+
+  .header-nav,
+  .header-links,
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-links {
+    justify-content: center;
+    gap: 4px 20px;
+  }
+
+  .header-actions {
+    justify-content: flex-end;
+  }
+
+  /* Ambos paneles se anclan a la fila completa de acciones, dentro del viewport. */
+  .header .menu-usuario,
+  .header .carrito-compras {
+    position: static;
+  }
+
+  .header .carrito-panel,
+  .header .menu-usuario-panel {
+    max-width: 100%;
+  }
+}
+
+/* ---------- Íconos del header (usuario y carrito) ---------- */
+
+.header-icono {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.header-icono:hover {
+  color: var(--color-primary);
+}
+
+.header-icono-contador {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.menu-usuario-saludo {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.header-enlace-sesion {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.header-enlace-sesion:hover {
+  color: var(--color-primary);
+}
+
+/* ---------- Paneles desplegables (carrito y cuenta) ---------- */
+
+.panel-header {
+  z-index: 70;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 12%);
+  color: var(--color-text);
+}
+
+.panel-header-encabezado {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-header-encabezado h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.panel-header-encabezado .texto-secundario {
+  font-size: 0.8rem;
+}
+
+.carrito-panel-lista {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 8px 20px;
+}
+
+.carrito-aviso {
+  margin: 8px 0;
+  font-size: 0.85rem;
+  color: #1E5631;
+}
+
+.carrito-aviso--error {
+  color: #8A2418;
+}
+
+.carrito-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.carrito-item:last-child {
+  border-bottom: none;
+}
+
+.carrito-item-nombre {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.carrito-item-precio {
+  margin: 4px 0 10px;
+  font-weight: 600;
+}
+
+.carrito-item-acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Cantidad como en la ficha de Maison: − 1 + dentro de un recuadro */
+.carrito-cantidad {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+}
+
+.carrito-cantidad button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.carrito-cantidad button:disabled,
+.carrito-cantidad button[aria-disabled="true"] {
+  color: var(--color-border);
+  cursor: not-allowed;
+}
+
+.carrito-cantidad span {
+  min-width: 28px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.carrito-quitar,
+.boton-texto {
+  min-height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.carrito-quitar:hover,
+.boton-texto:hover {
+  color: var(--color-text);
+}
+
+.carrito-quitar[aria-disabled="true"] {
+  color: var(--color-border);
+  cursor: not-allowed;
+}
+
+.carrito-vacio {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px 0;
+  color: var(--color-muted);
+}
+
+.carrito-panel-pie {
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.carrito-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.carrito-total span:last-child {
+  font-family: var(--fuente-titulos);
+  font-size: 1.35rem;
+  font-variant-numeric: lining-nums;
+}
+
+.carrito-pagar {
+  width: 100%;
+}
+
+.menu-usuario-enlaces {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.menu-usuario-enlaces a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.menu-usuario-enlaces a:hover {
+  background: var(--color-secondary);
+}
+
+.menu-usuario-pie {
+  padding: 8px 20px 12px;
+}
+
+@media (max-width: 767px) {
+  .menu-usuario-saludo {
+    display: none;
+  }
+}
+
+/* Logo grande (opción del admin, pedido de un cliente): más grande en todas las pantallas, 88 px en el computador,
+   72 en la tablet y 64 en el celular (normal: 52, 52 y 44). RN-01: el logo de la Universidad mantiene la misma
+   altura que el del negocio; mide 2,35 veces su alto de ancho */
+:root[data-logo='grande'] .header-logo-negocio {
+  height: 88px;
+  max-width: 320px;
+}
+
+:root[data-logo='grande'] .header-logo-universidad {
+  height: 88px;
+  max-width: 210px;
+}
+
+:root[data-logo='grande'] .header-separador {
+  height: 68px;
+}
+
+/* Sin logo, el nombre de la tienda crece en la misma medida */
+:root[data-logo='grande'] .header-nombre-tienda {
+  font-size: 2.5rem;
+}
+
+@media (max-width: 1023px) {
+  :root[data-logo='grande'] .header-logo-negocio {
+    height: 72px;
+    max-width: 260px;
+  }
+
+  :root[data-logo='grande'] .header-logo-universidad {
+    height: 72px;
+    max-width: 170px;
+  }
+
+  :root[data-logo='grande'] .header-separador {
+    height: 56px;
+  }
+
+  :root[data-logo='grande'] .header-nombre-tienda {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Con los dos logos en un celular angosto pasan a dos filas en vez de salirse de la pantalla */
+  :root[data-logo='grande'] .header-marcas {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 12px;
+    max-width: 100%;
+  }
+
+  :root[data-logo='grande'] .header-logo-negocio {
+    height: 64px;
+    max-width: min(240px, 100%);
+  }
+
+  :root[data-logo='grande'] .header-logo-universidad {
+    height: 64px;
+    max-width: 150px;
+  }
+
+  :root[data-logo='grande'] .header-separador {
+    height: 48px;
+  }
+
+  :root[data-logo='grande'] .header-nombre-tienda {
+    font-size: 2rem;
+  }
+}
+
+/* Bajo 380 px los dos logos grandes van en dos filas: la raya entre ellos quedaría sola junto al primero */
+@media (max-width: 379px) {
+  :root[data-logo='grande'] .header-separador {
+    display: none;
+  }
+}
+
+.header-links a { max-width: 100%; overflow-wrap: anywhere; }
+
+.header--editando { position: static; }
+.menu-edicion-item { display: flex; flex-direction: column; gap: 6px; min-width: 0; max-width: 100%; padding: 10px; border: 1px dashed var(--color-border); border-radius: var(--radio); }
+.menu-edicion-item .campo-editable { margin: 0; max-width: 220px; }
+.menu-edicion-nombre { font: inherit; min-height: 44px; }
+.menu-edicion-texto { overflow-wrap: anywhere; }
+.menu-edicion-movimientos { display: flex; gap: 8px; }
+.menu-edicion-movimientos button { min-width: 44px; min-height: 44px; border: 1px solid var(--color-border); border-radius: var(--radio); background: var(--color-surface); color: var(--color-text); cursor: pointer; }
+.menu-edicion-movimientos button:disabled { opacity: 0.45; cursor: default; }
+@media (max-width: 767px) {
+  .header--editando .header-links { align-items: stretch; }
+  .menu-edicion-item { flex: 1 1 150px; }
+}

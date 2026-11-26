@@ -1,0 +1,110 @@
+# Una tienda publicada: frontend (Caddy), backend (gunicorn), PostgreSQL y MongoDB, con sus datos en volúmenes.
+# Un despliegue = una tienda: para otra tienda en el mismo servidor, otro proyecto (-p) con su propio archivo.
+#
+#   docker compose -p <tienda> -f deploy/docker-compose.yml --env-file <archivo de la tienda> up -d --build
+#
+# Las variables están en deploy/tienda.env.example. Las bases no publican puertos: solo el backend las ve.
+
+x-registros: &registros
+  # Sin límite, los registros de un mes llenan el disco
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    <<: *registros
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-tienda}
+      POSTGRES_USER: ${POSTGRES_USER:-tienda}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en el archivo de la tienda}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mongo:
+    # 8.0 es la versión con soporte largo (hasta 2029). "mongo:8" sigue las versiones de ciclo corto (8.1, 8.2...).
+    # Desarrollo usa mongo:6 (docker-compose.yml de la raíz): el código funciona con ambas
+    image: mongo:8.0
+    # Sin límite, MongoDB usa para su caché la mitad de la RAM del servidor, y con varias tiendas en la misma
+    # máquina se quedan sin memoria. Un catálogo de tienda cabe de sobra en 0,5 GB
+    command: ["--wiredTigerCacheSizeGB", "${MONGO_CACHE_GB:-0.5}"]
+    restart: unless-stopped
+    <<: *registros
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USUARIO:-tienda}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_CLAVE:?Falta MONGO_CLAVE en el archivo de la tienda}
+    volumes:
+      - mongo:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    <<: *registros
+    # Todas las variables de la tienda (SECRET_KEY, correo, dominios...); las de abajo las fija el stack
+    env_file: "${ARCHIVO_TIENDA:?Falta ARCHIVO_TIENDA, la ruta del mismo archivo de la tienda}"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB:-tienda}
+      POSTGRES_USER: ${POSTGRES_USER:-tienda}
+      MONGO_URI: mongodb://${MONGO_USUARIO:-tienda}:${MONGO_CLAVE}@mongo:27017/${MONGO_BASE:-tienda}?authSource=admin
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    volumes:
+      - media:/app/media
+      # Solo el backend: lo que hay aquí no lo publica el Caddy de la tienda (ej. las fotos de las cotizaciones)
+      - privado:/app/privado
+    healthcheck:
+      test: ["CMD", "python", "deploy/salud.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  web:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    <<: *registros
+    environment:
+      DIRECCION_SITIO: ${DIRECCION_SITIO:-:80}
+    depends_on:
+      - backend
+    ports:
+      # Detrás de un proxy de borde: solo en 127.0.0.1 y un puerto por tienda. Con el dominio propio en este
+      # Caddy: IP_WEB=0.0.0.0, PUERTO_WEB=80 y PUERTO_WEB_HTTPS=443
+      - "${IP_WEB:-127.0.0.1}:${PUERTO_WEB:-8080}:80"
+      - "${IP_WEB:-127.0.0.1}:${PUERTO_WEB_HTTPS:-8443}:443"
+    volumes:
+      - media:/srv/media:ro
+      # Certificados HTTPS cuando este Caddy atiende el dominio
+      - caddy_datos:/data
+      - caddy_config:/config
+
+volumes:
+  postgres:
+  mongo:
+  media:
+  privado:
+  caddy_datos:
+  caddy_config:

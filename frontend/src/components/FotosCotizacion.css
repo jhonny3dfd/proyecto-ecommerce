@@ -1,0 +1,22 @@
+/* Miniaturas de las fotos de una cotización: al adjuntarlas (tienda) y al revisarlas (panel) */
+.cotizacion-fotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.cotizacion-fotos li {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+.cotizacion-fotos img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+}

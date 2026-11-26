@@ -1,0 +1,11 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Recuerda pagar tu pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}Recuerda pagar tu pedido #{{ orden.id }}{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Aún no recibimos el pago de tu pedido en {{ tienda }}. Si la transferencia no llega a tiempo, el pedido se
+  cancela automáticamente. Si ya transferiste, no tienes que hacer nada: te avisaremos cuando la tienda confirme el pago.
+</p>
+{% include "ventas/correos/_transferencia.html" %}
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% autoescape off %}Paga tu próxima entrega
+
+Se acerca tu próxima entrega de {{ plan.nombre }}, el {{ fecha_ciclo }}. Para recibirla, paga {{ total }}{% if costo_envio != "$0" %} (incluye {{ costo_envio }} de despacho){% endif %} hasta ese día. Si no se paga a tiempo, esa entrega no se envía y tu suscripción sigue con la siguiente.
+
+Pagar esta entrega: {{ url_pagar }}
+{% include "ventas/correos/_transferencia.txt" %}
+Entrega: {{ entrega }}
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

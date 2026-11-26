@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Cancelaste tu suscripción{% endblock %}
+{% block titulo_visible %}Cancelaste tu suscripción{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Tu suscripción al plan <strong>{{ plan.nombre }}</strong> quedó cancelada: no habrá más avisos ni entregas. Si ya habías pagado una entrega, te llegará igual. Gracias por haber sido parte de {{ tienda }}.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

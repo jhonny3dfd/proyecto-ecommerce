@@ -1,0 +1,400 @@
+/* Historial de pedidos del comprador (RF-02.4) con el estilo editorial */
+
+.historial-main {
+  min-height: 70vh;
+  padding: clamp(32px, 5vw, 64px) 0 var(--espacio-seccion);
+  background: var(--color-background);
+}
+
+.historial-volver {
+  margin-bottom: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.historial-titulo {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  margin-bottom: 32px;
+}
+
+.historial-estado {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* ---------- Tabla ---------- */
+
+.historial-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.historial-tabla th {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.historial-tabla td {
+  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.historial-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.historial-orden {
+  font-weight: 600;
+}
+
+.historial-fecha {
+  color: var(--color-muted);
+}
+
+.historial-total {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.historial-vacio {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* Estado del pedido: colores fijos con contraste AA sobre su fondo */
+.historial-chip {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.historial-chip--exito { background: #E7F3EA; color: #1E5631; }
+.historial-chip--pendiente { background: #FBF1DE; color: #7A4A0B; }
+.historial-chip--preparacion { background: #E0F2FE; color: #0C4A6E; }
+.historial-chip--enviado { background: #EDE9FE; color: #5B21B6; }
+.historial-chip--cancelado { background: #FBEAE7; color: #8A2418; }
+
+.historial-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: center;
+}
+
+.historial-enlace {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.historial-enlace:hover {
+  color: var(--color-primary);
+}
+
+.historial-resena-enviada {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* ---------- Detalle del envío (diálogo) ---------- */
+
+.historial-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgb(0 0 0 / 45%);
+}
+
+.historial-dialogo {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--color-surface);
+  border: 0;
+  color: var(--color-text);
+}
+
+.historial-dialogo::backdrop { background: rgb(0 0 0 / 45%); }
+
+.historial-dialogo h2 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+}
+
+.historial-detalle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 20px;
+  margin: 0 0 20px;
+}
+
+.historial-detalle dt {
+  color: var(--color-muted);
+}
+
+.historial-detalle dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.historial-proveedor {
+  text-transform: capitalize;
+}
+
+.historial-codigo {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-weight: 400;
+}
+
+.historial-direccion {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--color-secondary);
+}
+
+.historial-direccion p:first-child {
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.historial-dialogo-acciones {
+  text-align: right;
+}
+
+/* ---------- Foto del pedido y su visor (FotosPedido.jsx) ---------- */
+
+.historial-orden-contenido {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pedido-miniatura {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-secondary);
+  color: var(--color-muted);
+}
+
+button.pedido-miniatura {
+  cursor: zoom-in;
+}
+
+button.pedido-miniatura:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.pedido-miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pedido-miniatura-mas {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  min-width: 22px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.historial-dialogo.pedido-visor {
+  max-width: 720px;
+}
+
+.pedido-visor h2 {
+  margin-bottom: 16px;
+}
+
+/* El título recibe el foco al abrir (para el lector de pantalla), pero no es un control: sin recuadro */
+.pedido-visor h2[tabindex="-1"]:focus {
+  outline: none;
+}
+
+.pedido-visor-figura {
+  margin: 0 0 20px;
+}
+
+.pedido-visor-figura img,
+.pedido-visor-sin-foto {
+  display: flex;
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  background: var(--color-secondary);
+}
+
+.pedido-visor-sin-foto {
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  color: var(--color-muted);
+}
+
+.pedido-visor-sin-foto svg {
+  width: 64px;
+  height: 64px;
+}
+
+.pedido-visor-figura figcaption {
+  display: grid;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.pedido-visor-figura figcaption span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.pedido-visor-controles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.pedido-visor-contador {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--color-muted);
+}
+
+.pedido-visor-cerrar {
+  margin-left: auto;
+}
+
+/* ---------- Celular: cada pedido es una tarjeta ---------- */
+
+@media (max-width: 640px) {
+  .historial-tabla,
+  .historial-tabla tbody,
+  .historial-tabla tr,
+  .historial-tabla td {
+    display: block;
+  }
+
+  .historial-tabla {
+    border: none;
+    background: none;
+  }
+
+  .historial-tabla thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .historial-tabla tr {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .historial-tabla td,
+  .historial-tabla tbody tr:last-child td {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .historial-tabla td:last-child,
+  .historial-tabla tbody tr:last-child td:last-child {
+    border-bottom: none;
+  }
+
+  /* La columna correspondiente se muestra como etiqueta (data-etiqueta) */
+  .historial-tabla td[data-etiqueta]::before {
+    content: attr(data-etiqueta);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .historial-tabla td.historial-vacio {
+    justify-content: center;
+  }
+
+  .historial-detalle {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .historial-detalle dd {
+    margin-bottom: 10px;
+  }
+
+  .historial-dialogo-acciones .boton {
+    width: 100%;
+  }
+
+  /* Anterior, "1 de 3" y Siguiente en una fila; Cerrar debajo, de ancho completo */
+  .pedido-visor-controles {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .pedido-visor-controles .boton {
+    padding-inline: 8px;
+  }
+
+  .pedido-visor-cerrar {
+    grid-column: 1 / -1;
+    margin-left: 0;
+  }
+}

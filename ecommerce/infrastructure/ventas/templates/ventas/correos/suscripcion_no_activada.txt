@@ -1,0 +1,7 @@
+{% autoescape off %}Tu suscripción no se activó
+
+No recibimos a tiempo el pago de tu primera entrega del plan {{ plan.nombre }}, así que la suscripción no se activó. Si todavía te interesa, puedes suscribirte de nuevo cuando quieras.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

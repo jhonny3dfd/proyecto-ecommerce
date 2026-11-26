@@ -1,0 +1,18 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Tu contraseña cambió{% endblock %}
+{% block titulo_visible %}Tu contraseña cambió{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Hola, {{ nombre }}. La contraseña de tu cuenta en {{ tienda }} se acaba de cambiar. Si fuiste tú, no tienes que
+  hacer nada.
+</p>
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Si no fuiste tú, elige una nueva ahora mismo:
+</p>
+<p style="margin:20px 0;">
+  <a href="{{ url_recuperar }}" style="display:inline-block; padding:12px 22px; background-color:#1d4ed8; color:#ffffff; text-decoration:none; border-radius:6px; font-weight:bold;">Recuperar mi cuenta</a>
+</p>
+{% endblock %}
+{% block pie %}
+Te enviamos este aviso cada vez que cambia la contraseña de tu cuenta.
+{% endblock %}

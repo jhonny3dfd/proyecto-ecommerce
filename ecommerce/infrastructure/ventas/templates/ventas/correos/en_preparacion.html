@@ -1,0 +1,10 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Estamos preparando tu pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}Estamos preparando tu pedido{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  {{ tienda }} está preparando tu pedido #{{ orden.id }}. Te avisaremos por correo cuando
+  {% if es_retiro_local %}esté listo para retirar{% else %}salga a despacho{% endif %}.
+</p>
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

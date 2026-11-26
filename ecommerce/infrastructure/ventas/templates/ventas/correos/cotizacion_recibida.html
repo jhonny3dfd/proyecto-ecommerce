@@ -1,0 +1,13 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Recibimos tu solicitud de cotización #{{ cotizacion.id }}{% endblock %}
+{% block titulo_visible %}¡Recibimos tu solicitud de cotización!{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 16px 0; font-size:15px; line-height:1.5;">
+  Hola, {{ cotizacion.nombre }}. Gracias por escribirnos: {{ tienda }} revisará tu solicitud y te responderá a este
+  correo o al {{ cotizacion.telefono }} con el precio y el plazo.
+</p>
+{% include "ventas/correos/_cotizacion.html" %}
+{% endblock %}
+{% block pie %}
+Si necesitas cambiar algo de tu solicitud, responde este correo.
+{% endblock %}

@@ -1,0 +1,13 @@
+{% autoescape off %}{% if es_retiro_local %}¡Tu pedido está listo para retirar!
+
+Tu pedido #{{ orden.id }} ya está listo. Puedes retirarlo presentando tu número de orden.{% elif es_entrega_coordinada %}¡Tu pedido va en camino!
+
+{{ tienda }} va en camino a entregar tu pedido #{{ orden.id }} en la dirección que indicaste.{% else %}¡Tu pedido va en camino!
+
+{{ tienda }} despachó tu pedido #{{ orden.id }}{% if transportista %} con {{ transportista }}{% endif %}.{% if numero_ot %}
+Número de seguimiento: {{ numero_ot }}{% endif %}
+
+Sigue tu pedido con tu número de orden (#{{ orden.id }}) y este correo en:
+{{ url_seguimiento }}{% endif %}
+
+{% include "ventas/correos/_resumen.txt" %}{% endautoescape %}

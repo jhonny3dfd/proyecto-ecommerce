@@ -1,0 +1,7 @@
+{% autoescape off %}Tu suscripción está activa
+
+Recibimos el pago de tu primera entrega en {{ tienda }}. Tu suscripción al plan {{ plan.nombre }} ya está activa: unos días antes de cada entrega te escribiremos para que pagues la siguiente.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

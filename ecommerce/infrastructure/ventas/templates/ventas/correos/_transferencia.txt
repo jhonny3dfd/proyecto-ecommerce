@@ -1,0 +1,7 @@
+{% autoescape off %}{% if transferencia %}DATOS PARA TRANSFERIR
+Transfiere {{ transferencia.monto }} a la siguiente cuenta e indica como referencia "{{ transferencia.referencia }}".
+Te avisaremos por correo cuando la tienda confirme el pago.
+Tienes hasta el {{ transferencia.vence }} para transferir; después el pedido se cancela automáticamente.
+{% for dato in transferencia.datos %}{{ dato.etiqueta }}: {{ dato.valor }}
+{% endfor %}
+{% endif %}{% endautoescape %}

@@ -1,0 +1,135 @@
+.selector-variantes {
+  display: grid;
+  gap: 24px;
+}
+
+.selector-variantes-titulo {
+  font-family: var(--fuente-texto);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 10px;
+}
+
+.selector-variantes-elegido {
+  color: var(--color-text);
+  letter-spacing: 0.08em;
+}
+
+.selector-variantes-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selector-variantes-opcion {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.selector-variantes-opcion:hover {
+  border-color: var(--color-text);
+}
+
+/* Opción elegida: invertida (como las pestañas de la plantilla) */
+.selector-variantes-opcion[aria-pressed='true'] {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+.selector-variantes-resumen {
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+  background: var(--color-secondary);
+}
+
+.selector-variantes-precio {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  font-variant-numeric: lining-nums;
+}
+
+.selector-variantes-agotado {
+  font-weight: 600;
+  color: #9B2C1F;
+}
+
+.selector-variantes-sku {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.selector-variantes-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.selector-variantes-cantidad label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.selector-variantes-cantidad input {
+  width: 80px;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.selector-variantes-agregar {
+  width: 100%;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+}
+
+.selector-variantes-mensaje {
+  padding: 12px 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.selector-variantes-mensaje--error {
+  background: #FBEAE7;
+  color: #8A2418;
+}
+
+.selector-variantes-mensaje--exito {
+  background: #E7F3EA;
+  color: #1E5631;
+}
+
+/* Combinación sin stock (o ya toda en el carrito): se puede elegir, pero se ve apagada */
+.selector-variantes-opcion--agotada:not([aria-pressed='true']) {
+  background: var(--color-secondary);
+  color: var(--color-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.selector-variantes-opcion-nota {
+  font-size: 0.75rem;
+}

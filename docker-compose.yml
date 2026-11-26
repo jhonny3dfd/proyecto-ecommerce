@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ecommercedb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+    ports:
+      - "5432:5432"
+
+  db-mongo:
+    image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - "27017:27017"

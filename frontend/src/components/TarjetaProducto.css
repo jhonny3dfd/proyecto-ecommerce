@@ -1,0 +1,173 @@
+.tarjeta-producto {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.tarjeta-producto-imagen {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-accent);
+  margin-bottom: 18px;
+}
+
+.tarjeta-producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.tarjeta-producto:hover .tarjeta-producto-imagen img {
+  transform: scale(1.04);
+}
+
+/* Sin foto: la inicial del producto sobre el color de acento */
+.tarjeta-producto-sin-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--fuente-titulos);
+  font-size: 4rem;
+  color: var(--color-muted);
+}
+
+.tarjeta-producto-categoria {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 6px;
+}
+
+.tarjeta-producto-nombre {
+  font-size: 1.3rem;
+  margin: 0 0 8px;
+}
+
+.tarjeta-producto:hover .tarjeta-producto-nombre {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.tarjeta-producto-precio {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.tarjeta-producto-coleccion-privada {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tarjeta-producto-enlace {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tarjeta-producto-enlace:hover .tarjeta-producto-imagen img {
+  transform: scale(1.04);
+}
+
+.tarjeta-producto-enlace:hover .tarjeta-producto-nombre {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.tarjeta-producto-enlace:focus-visible {
+  outline-offset: 6px;
+}
+
+.tarjeta-producto-boton-version {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.tarjeta-producto-boton-version:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+  text-decoration: none;
+}
+
+.tarjeta-producto-precio-anterior {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.tarjeta-producto:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Grilla de tarjetas: 4 columnas en escritorio, 2 en tablet y celular */
+.grilla-productos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+}
+
+@media (max-width: 1023px) {
+  .grilla-productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 479px) {
+  .grilla-productos {
+    gap: 16px;
+  }
+
+  .tarjeta-producto-nombre {
+    font-size: 1.1rem;
+  }
+}
+
+/* Fotos completas (opción del admin, pedido de un cliente): la obra se ve entera dentro del mismo marco, sin
+   recortarla; los bordes que sobran quedan con el color de acento del tema */
+:root[data-fotos='completas'] .tarjeta-producto-imagen img {
+  object-fit: contain;
+}
+.producto-exclusivo-aviso {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.producto-exclusivo-aviso a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.producto-exclusivo-acceso {
+  color: var(--color-text);
+}

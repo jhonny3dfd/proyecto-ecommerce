@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "units": "ms",
+  "extraction": "Solo ms, status y error de cada muestra original. series/sample son indices desde 1; primeras cargas usan serie 0. Sin redondeo ni reconstruccion de muestras.",
+  "source_location": "Originales no versionados preservados. Los CSV seleccionados permiten revisar las cifras sin acceder a su ubicacion local.",
+  "indexes": "series S: JSON series[S-1][scenario][sample-1]; serie 0: JSON cold[sample-1].",
+  "statistics": {
+    "median": "statistics.median: promedio de los dos valores centrales para n par",
+    "p95": "nearest-rank: ordenar n valores y tomar indice ceil(0.95*n)-1 desde cero",
+    "maximum": "max de todas las muestras, sin exclusiones",
+    "errors": "cantidad con status distinto de 200; status 0 incluye errores de conexion",
+    "rounding": "3 decimales, round de Python; solo al comparar/publicar, nunca al extraer",
+    "csv_hash": "SHA256 del texto UTF-8 normalizado a LF; fuente JSON: SHA256 de bytes originales"
+  },
+  "environment_notes": "Windows, Ryzen 5 5600X, 16 GiB RAM; Docker 12 CPU y aprox. 7.7 GiB. Un visitante local, sin limitacion artificial. Primeras cargas reinician Django, no las caches de bases ni del SO. Calentamientos fuera de los CSV.",
+  "scenarios": {
+    "products": "/api/catalogo/productos/?page=1&page_size=24&orden=destacados",
+    "category": "/api/catalogo/productos/?categoria=Categoria+00",
+    "number": "/api/catalogo/productos/?categoria=Categoria+00&atributo_capacidad_gb=128",
+    "text": "/api/catalogo/productos/?categoria=Categoria+00&atributo_color=Verde",
+    "price_asc": "/api/catalogo/productos/?orden=precio-asc",
+    "price_desc": "/api/catalogo/productos/?orden=precio-desc",
+    "middle": "/api/catalogo/productos/?page=23",
+    "last": "/api/catalogo/productos/?page=45",
+    "filters": "/api/catalogo/filtros/",
+    "configuration": "/api/configuracion/",
+    "legal": "/api/ventas/paginas-legales/",
+    "initial_bundle": "Solicitudes paralelas de initial_paths de cada ejecucion; duracion conjunta medida, no suma de duraciones individuales.",
+    "first_process_requests": "Mismo conjunto initial_paths tras reiniciar Django, una observacion por ciclo."
+  },
+  "runs": [
+    {
+      "id": "historico-base",
+      "kind": "historica",
+      "csv": "historico-base.csv",
+      "measured_commit": "e5d700616976cb30369fb153bdffb5fa79ede4f4",
+      "source": {
+        "file": "baseline.json",
+        "sha256_bytes": "63226e0d8950001dcf478d1cb9364539048265d7030ada794b90d8aaeec3c13d"
+      },
+      "csv_sha256_utf8_lf": "1d83f74e4c6b16ba65417d09e9ffb674e1af91ba380746eae51a46c98aee4a1f",
+      "phase": "baseline",
+      "initial_paths": [
+        "/api/catalogo/productos/?page=1&page_size=24&orden=destacados",
+        "/api/configuracion/",
+        "/api/ventas/paginas-legales/",
+        "/api/catalogo/filtros/",
+        "/api/configuracion/",
+        "/api/configuracion/"
+      ],
+      "environment": {
+        "python": "3.13.15",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "backend": "Django runserver --noreload DEBUG=True",
+        "postgres": "15 Docker 55439",
+        "mongo": "6 Docker 27049",
+        "standard": "localhost, one visitor, no artificial throttling"
+      },
+      "fixture": {
+        "fixture": "scrum149-v1",
+        "total": 1200,
+        "public": 1080,
+        "active": 1140,
+        "categories": 12,
+        "pages": 45,
+        "legacy_missing": 30,
+        "legacy_stale": 30,
+        "ids_sha256": "cdb6ee5ea470767ca9f2d42dc8b5f88ce637d8f20adc9f09c5e07917e6217187"
+      },
+      "series": 3,
+      "repetitions": 30,
+      "cold": 10,
+      "warmup_count": 5,
+      "sample_counts": {
+        "products": 90,
+        "category": 90,
+        "number": 90,
+        "text": 90,
+        "price_asc": 90,
+        "price_desc": 90,
+        "middle": 90,
+        "last": 90,
+        "filters": 90,
+        "configuration": 90,
+        "legal": 90,
+        "initial_bundle": 90,
+        "first_process_requests": 10
+      }
+    },
+    {
+      "id": "historico-primeras-cargas",
+      "kind": "historica",
+      "csv": "historico-primeras-cargas.csv",
+      "measured_commit": "834fc77034e0ec09747a2fff0f27798349bd7dec",
+      "source": {
+        "file": "baseline-cold.json",
+        "sha256_bytes": "d5f3c0e19db5d320a4a5c0678c383bfb30549823b6bb130014a281c7f5ee22c5"
+      },
+      "csv_sha256_utf8_lf": "0b4988301a487bb26458e081ca0d14cae12e26ece4ab2b6281807dd34221b3f8",
+      "phase": "baseline-cold-independent",
+      "initial_paths": [
+        "/api/catalogo/productos/?page=1&page_size=24&orden=destacados",
+        "/api/configuracion/",
+        "/api/ventas/paginas-legales/",
+        "/api/catalogo/filtros/",
+        "/api/configuracion/",
+        "/api/configuracion/"
+      ],
+      "environment": {
+        "python": "3.13.15",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "backend": "Django runserver --noreload DEBUG=True",
+        "postgres": "15 Docker 55439",
+        "mongo": "6 Docker 27049",
+        "standard": "localhost, one visitor, no artificial throttling"
+      },
+      "fixture": {
+        "fixture": "scrum149-v1",
+        "total": 1200,
+        "public": 1080,
+        "active": 1140,
+        "categories": 12,
+        "pages": 45,
+        "legacy_missing": 30,
+        "legacy_stale": 30,
+        "ids_sha256": "cdb6ee5ea470767ca9f2d42dc8b5f88ce637d8f20adc9f09c5e07917e6217187"
+      },
+      "series": 0,
+      "repetitions": 0,
+      "cold": 10,
+      "warmup_count": 5,
+      "sample_counts": {
+        "first_process_requests": 10
+      }
+    },
+    {
+      "id": "historico-optimizado",
+      "kind": "historica",
+      "csv": "historico-optimizado.csv",
+      "measured_commit": "750360b16e059bcd46f2ef05a6089ff02f0fcf6f",
+      "source": {
+        "file": "final.json",
+        "sha256_bytes": "d5fb724fa48102f983ec98efd9cc9ae55e991f4f5ac121057b705f8cd8a87e38"
+      },
+      "csv_sha256_utf8_lf": "4398e1f7231ddcf0fe07c582d70e7d2ff190b0561dcdab9bb324094f6dcffb4d",
+      "phase": "final",
+      "initial_paths": [
+        "/api/catalogo/productos/?page=1&page_size=24&orden=destacados",
+        "/api/configuracion/",
+        "/api/ventas/paginas-legales/"
+      ],
+      "environment": {
+        "python": "3.13.15",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "backend": "Django runserver --noreload DEBUG=True",
+        "postgres": "15 Docker 55439",
+        "mongo": "6 Docker 27049",
+        "standard": "localhost, one visitor, no artificial throttling"
+      },
+      "fixture": {
+        "fixture": "scrum149-v1",
+        "total": 1200,
+        "public": 1080,
+        "active": 1140,
+        "categories": 12,
+        "pages": 45,
+        "legacy_missing": 30,
+        "legacy_stale": 30,
+        "ids_sha256": "cdb6ee5ea470767ca9f2d42dc8b5f88ce637d8f20adc9f09c5e07917e6217187"
+      },
+      "series": 3,
+      "repetitions": 30,
+      "cold": 10,
+      "warmup_count": 5,
+      "sample_counts": {
+        "products": 90,
+        "category": 90,
+        "number": 90,
+        "text": 90,
+        "price_asc": 90,
+        "price_desc": 90,
+        "middle": 90,
+        "last": 90,
+        "filters": 90,
+        "configuration": 90,
+        "legal": 90,
+        "initial_bundle": 90,
+        "first_process_requests": 10
+      }
+    },
+    {
+      "id": "subsanacion",
+      "kind": "nueva",
+      "csv": "subsanacion.csv",
+      "measured_commit": "12eedb8299ce80ea34216f82ecb31fca42d8a1ef",
+      "source": {
+        "file": "medicion.json",
+        "sha256_bytes": "b203ac75c294326d64ee7ee0fa6cdc03c9eb86cfdb52fa9b1dbc85cb34171b18"
+      },
+      "csv_sha256_utf8_lf": "0b35d7a54b4877ff24d5aba4577d17bcf8dc33b7107bb96986eb4c09663fe136",
+      "phase": "subsanacion",
+      "initial_paths": [
+        "/api/catalogo/productos/?page=1&page_size=24&orden=destacados",
+        "/api/configuracion/",
+        "/api/ventas/paginas-legales/"
+      ],
+      "environment": {
+        "python": "3.13.15",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD",
+        "backend": "Django runserver --noreload DEBUG=True",
+        "postgres": "15 Docker 55439",
+        "mongo": "6 Docker 27049",
+        "standard": "localhost, un visitante, sin limitación artificial"
+      },
+      "fixture": {
+        "fixture": "scrum149-v1",
+        "total": 1200,
+        "public": 1080,
+        "active": 1140,
+        "categories": 12,
+        "pages": 45,
+        "legacy_missing": 30,
+        "legacy_stale": 30,
+        "ids_sha256": "cdb6ee5ea470767ca9f2d42dc8b5f88ce637d8f20adc9f09c5e07917e6217187"
+      },
+      "series": 3,
+      "repetitions": 30,
+      "cold": 10,
+      "warmup_count": 5,
+      "sample_counts": {
+        "products": 90,
+        "category": 90,
+        "number": 90,
+        "text": 90,
+        "price_asc": 90,
+        "price_desc": 90,
+        "middle": 90,
+        "last": 90,
+        "filters": 90,
+        "configuration": 90,
+        "legal": 90,
+        "initial_bundle": 90,
+        "first_process_requests": 10
+      }
+    }
+  ],
+  "tables": {
+    "scrum149-historico": {
+      "runs": [
+        "historico-base",
+        "historico-optimizado"
+      ],
+      "rows": [
+        {
+          "label": "Listado inicial",
+          "scenario": "products"
+        },
+        {
+          "label": "Opciones globales",
+          "scenario": "filters"
+        },
+        {
+          "label": "Configuración",
+          "scenario": "configuration"
+        },
+        {
+          "label": "Conjunto inicial de API",
+          "scenario": "initial_bundle"
+        },
+        {
+          "label": "Primera carga tras reiniciar Django, 10 ciclos",
+          "scenario": "first_process_requests",
+          "runs": [
+            "historico-primeras-cargas",
+            "historico-optimizado"
+          ]
+        }
+      ]
+    },
+    "scrum149-subsanacion": {
+      "runs": [
+        "subsanacion"
+      ],
+      "rows": [
+        {
+          "label": "Listado inicial",
+          "scenario": "products"
+        },
+        {
+          "label": "Categoría",
+          "scenario": "category"
+        },
+        {
+          "label": "Atributo numérico",
+          "scenario": "number"
+        },
+        {
+          "label": "Atributo de texto",
+          "scenario": "text"
+        },
+        {
+          "label": "Precio ascendente",
+          "scenario": "price_asc"
+        },
+        {
+          "label": "Precio descendente",
+          "scenario": "price_desc"
+        },
+        {
+          "label": "Página intermedia",
+          "scenario": "middle"
+        },
+        {
+          "label": "Última página",
+          "scenario": "last"
+        },
+        {
+          "label": "Opciones globales",
+          "scenario": "filters"
+        },
+        {
+          "label": "Configuración",
+          "scenario": "configuration"
+        },
+        {
+          "label": "Páginas legales",
+          "scenario": "legal"
+        },
+        {
+          "label": "Conjunto inicial de API",
+          "scenario": "initial_bundle"
+        },
+        {
+          "label": "Primera carga tras reiniciar Django, 10 ciclos",
+          "scenario": "first_process_requests"
+        }
+      ]
+    }
+  }
+}

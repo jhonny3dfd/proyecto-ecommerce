@@ -1,0 +1,114 @@
+
+.sobre-mi-main {
+  padding-bottom: 4rem;
+}
+
+.sobre-mi-biografia {
+  max-width: 850px;
+  margin: 0 auto 3rem;
+}
+
+.sobre-mi-contenido {
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+/* Con fotos (pedido de un cliente, opcionales): el texto y las fotos lado a lado en el computador */
+.sobre-mi-biografia--con-fotos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+  max-width: 1100px;
+}
+
+.sobre-mi-fotos {
+  display: grid;
+  gap: 16px;
+}
+
+.sobre-mi-foto {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-secondary);
+}
+
+.sobre-mi-foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dos fotos, una al lado de la otra: así no alargan la página cuando el texto es corto */
+.sobre-mi-fotos--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* "Fotos completas, sin recortar" (Configuración > Fotos y logo) también vale aquí: cada foto con su forma */
+:root[data-fotos='completas'] .sobre-mi-foto {
+  aspect-ratio: auto;
+  background: none;
+}
+
+:root[data-fotos='completas'] .sobre-mi-foto img {
+  height: auto;
+}
+
+.sobre-mi-contenido p {
+  margin-bottom: 1rem;
+}
+
+.sobre-mi-contenido h2,
+.sobre-mi-contenido h3 {
+  margin: 1.5rem 0 0.75rem;
+}
+
+.sobre-mi-contenido ul,
+.sobre-mi-contenido ol {
+  padding-left: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.sobre-mi-contenido a,
+.sobre-mi-contactos a {
+  color: var(--color-primario, inherit);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sobre-mi-seccion {
+  margin-top: 3rem;
+}
+
+.sobre-mi-seccion > h2 {
+  margin-bottom: 1.5rem;
+}
+
+.sobre-mi-contactos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-left: 1.25rem;
+}
+
+.sobre-mi-contactos a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 800px) {
+  .sobre-mi-biografia--con-fotos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .sobre-mi-main {
+    padding-bottom: 2.5rem;
+  }
+
+  .sobre-mi-seccion {
+    margin-top: 2rem;
+  }
+}

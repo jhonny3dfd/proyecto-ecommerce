@@ -1,0 +1,229 @@
+/* Base del diseño de la tienda (referencia: plantilla Maison de Lovable).
+   Los colores vienen de la paleta activa (constants/palettes.js, aplicarPaleta), así funcionan los 4 temas. */
+
+:root {
+  /* Las fuentes las pone aplicarTipografia() (constants/tipografias.js) según lo que eligió el admin; esto es el
+     respaldo hasta que corre el JavaScript */
+  --fuente-titulos: Georgia, 'Times New Roman', serif;
+  --fuente-texto: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --ancho-contenido: 1200px;
+  --margen-lateral: clamp(16px, 4vw, 40px);
+  --espacio-seccion: clamp(56px, 8vw, 112px);
+  --radio: 2px;
+  --transicion: 0.25s ease;
+
+  /* Valores por defecto (tema 1) mientras aplicarPaleta no corre */
+  --color-primary: #9C4F2E;
+  --color-on-primary: #FFFFFF;
+  --color-secondary: #F1EDE7;
+  --color-accent: #E9DCCB;
+  --color-background: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-text: #2A2622;
+  --color-muted: #615A52;
+  --color-control-border: #76716A;
+  --color-border: #E3DCD2;
+  --color-footer: #2A2622;
+
+  font-family: var(--fuente-texto);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fuente-titulos);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0 0 0.5em;
+  /* Cifras alineadas: los montos ($351.583) no suben y bajan como en las cifras antiguas de Cormorant */
+  font-variant-numeric: lining-nums;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.75rem); letter-spacing: -0.01em; }
+h2 { font-size: clamp(2rem, 4vw, 2.75rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.saltar-contenido {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 2000;
+  padding: 8px 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transform: translateY(-200%);
+}
+
+.saltar-contenido:focus {
+  transform: none;
+}
+
+/* ---------- Piezas reutilizables ---------- */
+
+.contenedor {
+  width: 100%;
+  max-width: calc(var(--ancho-contenido) + 2 * var(--margen-lateral));
+  margin: 0 auto;
+  padding: 0 var(--margen-lateral);
+}
+
+/* Texto chico en mayúsculas sobre los títulos ("CURATED FOR CONSIDERED LIVING") */
+.antetitulo {
+  display: block;
+  font-family: var(--fuente-texto);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.texto-secundario {
+  color: var(--color-muted);
+}
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.95rem 2.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transicion), color var(--transicion), border-color var(--transicion),
+    opacity var(--transicion);
+}
+
+.boton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.boton-primario {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.boton-primario:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.boton-contorno {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.boton-contorno:hover:not(:disabled) {
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+/* Enlace de texto con flecha ("VIEW ALL →") */
+.enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.enlace-flecha:hover {
+  color: var(--color-primary);
+}
+
+.lista-sin-estilo {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Solo para lectores de pantalla */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

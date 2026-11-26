@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Reanudaste tu suscripción{% endblock %}
+{% block titulo_visible %}Reanudaste tu suscripción{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Tu suscripción al plan <strong>{{ plan.nombre }}</strong> está activa otra vez. Te avisaremos unos días antes de la próxima entrega.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

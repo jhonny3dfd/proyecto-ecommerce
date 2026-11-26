@@ -1,0 +1,9 @@
+{% autoescape off %}Recuerda pagar tu pedido #{{ orden.id }}
+
+Aún no recibimos el pago de tu pedido en {{ tienda }}. Si la transferencia no llega a tiempo, el pedido se
+cancela automáticamente. Si ya transferiste, no tienes que hacer nada: te avisaremos cuando la tienda confirme el pago.
+
+{% include "ventas/correos/_transferencia.txt" %}{% include "ventas/correos/_resumen.txt" %}
+
+Revisa el estado de tu pedido con tu número de orden (#{{ orden.id }}) y este correo en:
+{{ url_seguimiento }}{% endautoescape %}

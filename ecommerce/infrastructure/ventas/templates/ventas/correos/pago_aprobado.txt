@@ -1,0 +1,9 @@
+{% autoescape off %}¡Pago confirmado!
+
+Recibimos el pago de tu pedido #{{ orden.id }}. Ahora lo prepararemos y te avisaremos por correo
+cuando salga a despacho o esté listo para retirar.
+
+{% include "ventas/correos/_resumen.txt" %}
+
+Revisa el estado de tu pedido con tu número de orden (#{{ orden.id }}) y este correo en:
+{{ url_seguimiento }}{% endautoescape %}

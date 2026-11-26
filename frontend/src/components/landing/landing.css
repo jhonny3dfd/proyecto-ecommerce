@@ -1,0 +1,1075 @@
+/* ---------- Portada ---------- */
+
+.portada {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(88vh, 860px);
+  padding: 96px 0;
+  background-color: var(--color-footer);
+  background-size: cover;
+  background-position: center;
+  color: #FFFFFF;
+}
+
+/* Opacidad del velo en el borde derecho. Registrada para que el cambio entre foto y video sea gradual */
+@property --velo-borde {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 60%;
+}
+
+/* El velo mantiene al menos un 60 % de negro incluso sobre una portada completamente blanca, en toda la zona del texto
+   (hasta el 55 % del ancho): con menos, el texto no llega a 4,5:1 sobre un cuadro blanco (WCAG 1.4.3). */
+.portada-velo {
+  --velo-borde: 60%;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(90deg, rgb(0 0 0 / 62%) 0%, rgb(0 0 0 / 60%) 55%, rgb(0 0 0 / var(--velo-borde)) 100%);
+  transition: --velo-borde 1s ease-in-out;
+}
+
+/* Con el video en pantalla, el velo se aclara hacia la derecha, donde no hay texto, para que el video se vea menos
+   oscuro. Solo desde 1024 px: más angosto, el texto pasa del 55 % del ancho y necesita el velo completo */
+@media (min-width: 1024px) {
+  .portada--con-video .portada-velo {
+    --velo-borde: 30%;
+  }
+}
+
+/* Carrusel de portada con fundido suave (SCRUM-194) */
+.portada-carrusel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.portada-diapositiva {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+
+.portada-diapositiva--activa {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* WCAG 2.2.2 / prefers-reduced-motion: la transición no se anima */
+@media (prefers-reduced-motion: reduce) {
+  .portada-diapositiva {
+    transition: none !important;
+  }
+}
+
+.portada-contenido {
+  position: relative;
+  z-index: 3;
+}
+
+/* Flechas y pausa juntas abajo a la derecha (con 2+ fotos): no tapan los textos ni el botón de la foto */
+.portada-controles-carrusel {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Flechas y pausa (WCAG 2.2.2): círculos de 44 px con un ícono SVG, iguales en todos los dispositivos */
+.portada-control-carrusel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #FFFFFF;
+  background: rgb(0 0 0 / 60%);
+  border: 1px solid rgb(255 255 255 / 40%);
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.portada-control-carrusel:hover,
+.portada-control-carrusel:focus-visible {
+  background: rgb(0 0 0 / 85%);
+  border-color: #FFFFFF;
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+.portada-icono-carrusel {
+  display: block;
+  flex: none;
+}
+
+.portada-posicion-carrusel {
+  min-width: 3.5rem;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #FFFFFF;
+  background: rgb(0 0 0 / 60%);
+  border-radius: 9999px;
+}
+
+.portada-antetitulo {
+  color: #FFFFFF;
+  margin-bottom: 1.5rem;
+}
+
+.portada-titulo {
+  max-width: 14ch;
+  color: #FFFFFF;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.portada-texto {
+  max-width: 46ch;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgb(255 255 255 / 92%);
+  margin-bottom: 2.25rem;
+  white-space: pre-line;
+}
+
+.portada-boton:focus-visible {
+  outline-color: #FFFFFF;
+}
+
+/* ---------- Secciones ---------- */
+
+.seccion-landing {
+  padding: var(--espacio-seccion) 0;
+  background: var(--color-background);
+  /* Al saltar a /#nosotros, la sección no queda tapada por el header fijo */
+  scroll-margin-top: 80px;
+}
+
+.seccion-landing--alterna {
+  background: var(--color-secondary);
+}
+
+.seccion-landing-encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+.seccion-landing-encabezado h2 {
+  margin: 0;
+}
+
+/* ---------- Nosotros ---------- */
+
+.nosotros-contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+}
+
+.nosotros-imagen {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-accent);
+}
+
+.nosotros-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nosotros-parrafo {
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+/* Sin foto: el texto va centrado en una columna */
+.nosotros--sin-imagen .nosotros-contenido {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.nosotros--sin-imagen .nosotros-parrafo {
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .portada {
+    min-height: 72vh;
+    padding: 72px 0;
+  }
+
+  .portada-velo {
+    background: rgb(0 0 0 / 60%);
+  }
+
+  .seccion-landing-encabezado {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nosotros-contenido {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ======================================================================
+   Modo edición (solo admin): los textos se vuelven campos en su lugar
+   ====================================================================== */
+
+.boton-editar-pagina,
+.aviso-edicion-no-disponible {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+
+/* Sin la configuración no se puede editar: el borrador partiría vacío y guardarlo pisaría la tienda */
+.aviso-edicion-no-disponible {
+  max-width: min(360px, calc(100% - 48px));
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--radio);
+  background: var(--color-text);
+  color: var(--color-background);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Fija abajo; reserva su alto al final de la página (BarraEdicion.jsx) para no tapar el footer */
+.barra-edicion {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  background: var(--color-text);
+  color: var(--color-background);
+  box-shadow: 0 -8px 24px rgb(0 0 0 / 18%);
+  /* Se distingue del footer, que también es oscuro */
+  border-top: 1px solid rgb(255 255 255 / 22%);
+}
+
+.barra-edicion-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.barra-edicion-estado {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.barra-edicion-estado strong {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.barra-edicion-identidad,
+.barra-edicion-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* RN-01: dónde va el logo de la Universidad (siempre junto al de la tienda) */
+.barra-edicion-ubicacion {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: 0.85rem;
+}
+
+.barra-edicion-ubicacion select {
+  min-height: 36px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.barra-edicion .boton-primario {
+  padding: 0.75rem 1.5rem;
+}
+
+.barra-edicion :focus-visible {
+  outline-color: var(--color-background);
+}
+
+.barra-edicion-errores {
+  margin: 0 auto;
+  padding-bottom: 14px;
+  list-style: none;
+  font-size: 0.85rem;
+  color: #FFD9CF;
+}
+
+/* Botón secundario del modo edición (contorno); la variante clara va sobre la portada y la barra */
+.boton-edicion {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.boton-edicion:disabled,
+.boton-edicion--deshabilitado {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.barra-edicion .boton-edicion,
+.selector-imagen--claro .boton-edicion {
+  background: transparent;
+  color: inherit;
+}
+
+.selector-imagen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.selector-imagen--claro {
+  color: #FFFFFF;
+}
+
+.barra-edicion .selector-imagen--claro {
+  color: var(--color-background);
+}
+
+/* El input de archivo está oculto: su foco se muestra en el botón que lo abre */
+.selector-imagen input:focus-visible + label {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.selector-imagen-error {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: #FFD9CF;
+}
+
+.selector-imagen:not(.selector-imagen--claro) .selector-imagen-error {
+  color: #9B2C1F;
+}
+
+/* ---------- Campos de texto en su lugar ---------- */
+
+.campo-editable {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 1.25rem;
+}
+
+.campo-editable-etiqueta {
+  font-family: var(--fuente-texto);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.campo-editable--claro .campo-editable-etiqueta,
+.campo-editable--claro .campo-editable-ayuda {
+  color: rgb(255 255 255 / 85%);
+}
+
+.campo-editable-control {
+  width: 100%;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px dashed currentColor;
+  border-radius: var(--radio);
+  background: rgb(255 255 255 / 55%);
+  color: var(--color-text);
+  resize: vertical;
+  field-sizing: content;
+}
+
+.campo-editable--claro .campo-editable-control {
+  background: rgb(0 0 0 / 25%);
+  color: #FFFFFF;
+}
+
+.campo-editable-control:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-style: solid;
+}
+
+.campo-editable-ayuda {
+  align-self: flex-end;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.campo-editable-ayuda--error {
+  align-self: flex-start;
+  font-weight: 600;
+  color: #9B2C1F;
+}
+
+.campo-editable--claro .campo-editable-ayuda--error {
+  color: #FFD9CF;
+}
+
+/* Los campos toman la tipografía del elemento que reemplazan */
+.portada-titulo--campo {
+  max-width: none;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.portada--editando .portada-texto {
+  max-width: none;
+  margin: 0;
+}
+
+/* El ancho va en el contenedor del campo: así la etiqueta y el contador quedan alineados con él */
+.campo-ancho-medio {
+  max-width: 640px;
+}
+
+.campo-ancho-titulo {
+  max-width: 900px;
+}
+
+.portada-controles {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 10;
+  /* Ocupa todo el ancho para alinear el panel a la derecha: solo el panel recibe los clics, no lo que tapa */
+  pointer-events: none;
+}
+
+.portada-controles > * {
+  pointer-events: auto;
+}
+
+.portada-editor-fotos-contenedor {
+  max-width: 100%;
+}
+
+.portada-editor-fotos {
+  display: flex;
+  flex-direction: column;
+  /* Como elemento flex no se achicaría bajo el ancho de sus fotos: con muchas, la lista se desplaza por dentro
+     en vez de sacar el panel de la pantalla */
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  gap: 0.6rem;
+  background: rgb(0 0 0 / 70%);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 20%);
+}
+
+.portada-editor-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.portada-editor-fotos-lista {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  list-style: none;
+  padding: 0.25rem 0;
+  margin: 0;
+}
+
+.portada-editor-foto-item {
+  /* El texto oculto "Foto N de M" es absoluto: así queda dentro de la lista y su scroll lo recorta, en vez de
+     estirar la página hacia la derecha */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgb(0 0 0 / 50%);
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgb(255 255 255 / 15%);
+}
+
+.portada-editor-miniatura {
+  width: 60px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.portada-editor-acciones {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* La miniatura elegida es la foto cuyos textos se editan */
+.portada-editor-elegir {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.portada-editor-elegir[aria-pressed='true'] {
+  border-color: #FFFFFF;
+}
+
+.portada-editor-elegir:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* Textos por foto: pasar de una foto a otra y elegir a qué página lleva su botón */
+.portada-editor-navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.portada-editor-posicion {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+}
+
+.portada-editor-destino {
+  max-width: 320px;
+}
+
+.portada-editor-destino select {
+  min-height: 44px;
+}
+
+.portada-editor-boton-flecha {
+  padding: 0.15rem 0.35rem;
+  font-size: 0.75rem;
+  background: rgb(255 255 255 / 15%);
+  color: #FFFFFF;
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.portada-editor-boton-flecha:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.portada-editor-boton-quitar {
+  padding: 0.15rem 0.35rem;
+  font-size: 0.75rem;
+  background: rgb(220 38 38 / 30%);
+  color: #ff9999;
+  border: 1px solid rgb(220 38 38 / 50%);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.portada-editor-boton-quitar:hover,
+.portada-editor-boton-quitar:focus-visible {
+  background: rgb(220 38 38 / 60%);
+  color: #FFFFFF;
+}
+
+.portada-boton--campo {
+  padding: 0.6rem 1rem;
+  cursor: default;
+}
+
+.portada-boton--campo .campo-editable {
+  margin: 0;
+}
+
+.portada-boton-campo {
+  min-width: 14ch;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nosotros-titulo-campo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.15;
+}
+
+.nosotros-imagen {
+  position: relative;
+}
+
+.nosotros-imagen-vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.nosotros-imagen-controles {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+}
+
+.nosotros-aviso,
+.seccion-landing-nota {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.seccion-landing-nota {
+  margin: -24px 0 32px;
+}
+
+.landing-nombre-edicion {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.landing-nombre-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 420px;
+}
+
+.landing-nombre-campo input {
+  padding: 8px 12px;
+  border: 1px dashed var(--color-text);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .boton-editar-pagina,
+  .aviso-edicion-no-disponible {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .portada--editando {
+    flex-wrap: wrap;
+  }
+
+  .portada-controles {
+    position: static;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+  }
+}
+
+/* ---------- Instagram ---------- */
+
+.instagram-encabezado {
+  margin-bottom: clamp(28px, 4vw, 48px);
+  text-align: center;
+}
+
+.instagram-encabezado h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.instagram-nota {
+  margin: -16px 0 28px;
+  text-align: center;
+}
+
+/* Hasta 6 fotos cuadradas: 6 por fila en escritorio, 3 en tablet y 2 en celular */
+.instagram-grilla {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(8px, 1.2vw, 16px);
+}
+
+.instagram-foto {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-accent);
+}
+
+.instagram-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transicion);
+}
+
+a.instagram-foto:hover img {
+  transform: scale(1.04);
+}
+
+.instagram-foto-vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* Modo edición: los botones de cada foto van debajo de ella */
+.instagram-espacio {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.instagram-espacio .boton-edicion {
+  min-height: 36px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.72rem;
+}
+
+.instagram-acciones {
+  margin-top: clamp(28px, 4vw, 48px);
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .instagram-grilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .instagram-grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .instagram-acciones .boton {
+    width: 100%;
+  }
+}
+
+/* ---------- Reseñas (SeccionResenas.jsx) ---------- */
+
+.resenas-landing-encabezado {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  text-align: center;
+}
+
+.resenas-landing-encabezado h2 {
+  margin: 0;
+}
+
+.resenas-landing-encabezado .resenas-promedio {
+  justify-content: center;
+}
+
+.resenas-landing-nota {
+  text-align: center;
+}
+
+/* Destacados (pedido de un cliente): foto vertical como en el catálogo (pedido de Alan, 2026-11-13). En el computador
+   van todos en una fila (son hasta 4, domain/destacados.py) y centrados si son menos; en la tablet y el celular, dos
+   por fila como el catálogo */
+.grilla-destacados {
+  --separacion-destacados: clamp(20px, 3vw, 40px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--separacion-destacados);
+}
+
+.grilla-destacados > * {
+  flex: 0 0 calc((100% - 3 * var(--separacion-destacados)) / 4);
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .grilla-destacados > * {
+    flex-basis: calc((100% - var(--separacion-destacados)) / 2);
+  }
+}
+
+.tarjeta-destacado {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.tarjeta-destacado-imagen {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-accent);
+  margin-bottom: 18px;
+}
+
+.tarjeta-destacado-imagen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.tarjeta-destacado:hover .tarjeta-destacado-imagen img {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta-destacado-imagen img {
+    transition: none;
+  }
+
+  .tarjeta-destacado:hover .tarjeta-destacado-imagen img {
+    transform: none;
+  }
+}
+
+/* Sin foto: la inicial sobre el color de acento, como en las tarjetas de productos */
+.tarjeta-destacado-sin-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--fuente-titulos);
+  font-size: 5rem;
+  color: var(--color-muted);
+}
+
+/* Del tamaño del nombre en las tarjetas del catálogo (TarjetaProducto.css) */
+.tarjeta-destacado-nombre {
+  font-size: 1.3rem;
+  margin: 0 0 8px;
+}
+
+.tarjeta-destacado:hover .tarjeta-destacado-nombre {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.tarjeta-destacado:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Modo edición: qué muestra la vitrina y la selección de destacados */
+.editor-vitrina {
+  padding-block: clamp(24px, 4vw, 40px);
+}
+
+.editor-vitrina-modo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin: 0;
+  padding: 16px 20px;
+  border: 1px dashed var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+}
+
+.editor-vitrina-modo legend {
+  padding: 0 6px;
+}
+
+.editor-vitrina-opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 28rem;
+  cursor: pointer;
+}
+
+.editor-vitrina-opcion input {
+  margin-top: 0.3em;
+  accent-color: var(--color-primary);
+}
+
+.destacados-titulo-campo {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.editor-destacados {
+  margin-bottom: 32px;
+  padding: 20px;
+  border: 1px dashed var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+}
+
+.editor-destacados-titulo {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+.editor-destacados-lista {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.editor-destacados-fila {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.editor-destacados-miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-accent);
+  color: var(--color-muted);
+  font-family: var(--fuente-titulos);
+}
+
+.editor-destacados-miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editor-destacados-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.editor-destacados-texto .texto-secundario,
+.editor-destacados-aviso,
+.editor-destacados-ayuda {
+  font-size: 0.85rem;
+}
+
+.editor-destacados-aviso {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.editor-destacados-acciones,
+.editor-destacados-agregar-controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.editor-destacados-agregar-controles select {
+  flex: 1 1 14rem;
+  min-height: 40px;
+  min-width: 0;
+}
+
+.editor-destacados-ayuda {
+  margin: 8px 0 0;
+}
+
+.editor-destacados-error {
+  color: var(--color-text);
+  font-weight: 600;
+  border-left: 3px solid var(--color-primary);
+  padding-left: 10px;
+}
+
+.editor-destacados-nota {
+  margin: 16px 0 0;
+}
+
+/* En el celular los botones bajan a su propia fila, bajo el nombre */
+@media (max-width: 639px) {
+  .editor-destacados-fila {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .editor-destacados-acciones {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Fotos completas (opción del admin, pedido de un cliente): la obra se ve entera dentro del mismo marco, sin
+   recortarla; los bordes que sobran quedan con el color de acento del tema */
+:root[data-fotos='completas'] .tarjeta-destacado-imagen img {
+  object-fit: contain;
+}
+
+/* El video cubre su diapositiva sin ocultar la imagen de portada mientras carga. */
+/* El video se aclara un 20 % bajo el velo. No baja el contraste del texto: el peor caso es un cuadro blanco, que no
+   puede ponerse más claro, y sobre él el velo sigue dejando 4,5:1 (prueba en e2e/portada-accesible.spec.js) */
+.portada-diapositiva video { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1.2); }
+.portada-editor-video { display: grid; gap: .5rem; margin-block: .75rem; }
+.portada-editor-video label { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }

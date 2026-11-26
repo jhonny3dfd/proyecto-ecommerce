@@ -1,0 +1,32 @@
+<h2 style="margin:24px 0 8px 0; font-size:16px; color:#111827;">Resumen de tu compra</h2>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; border-collapse:collapse;">
+  {% for detalle in detalles %}
+  <tr>
+    <td style="padding:8px 0; border-bottom:1px solid #f3f4f6;">
+      {{ detalle.nombre }}<br>
+      <span style="color:#4b5563;">{{ detalle.cantidad }} × {{ detalle.precio_unitario }}</span>
+    </td>
+    <td align="right" style="padding:8px 0; border-bottom:1px solid #f3f4f6; white-space:nowrap;">{{ detalle.total }}</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td style="padding:8px 0 2px 0; color:#4b5563;">Subtotal</td>
+    <td align="right" style="padding:8px 0 2px 0;">{{ subtotal }}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 0; color:#4b5563;">Envío</td>
+    <td align="right" style="padding:2px 0;">{{ costo_envio }}</td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0; font-weight:bold; font-size:16px;">Total</td>
+    <td align="right" style="padding:8px 0; font-weight:bold; font-size:16px;">{{ total }}</td>
+  </tr>
+</table>
+<p style="margin:16px 0 4px 0; font-size:14px;"><strong>Entrega:</strong> {{ entrega }}</p>
+{% if aviso_entrega_coordinada %}<p style="margin:0 0 4px 0; font-size:14px; color:#4b5563;">{{ aviso_entrega_coordinada }}</p>{% endif %}
+{% if orden.nombre_destinatario %}<p style="margin:0 0 4px 0; font-size:14px;"><strong>Recibe:</strong> {{ orden.nombre_destinatario }}{% if orden.telefono_destinatario %} ({{ orden.telefono_destinatario }}){% endif %}</p>{% endif %}
+<p style="margin:0; font-size:14px;"><strong>Medio de pago:</strong> {{ metodo_pago }}</p>
+{% if datos_factura %}
+<h2 style="margin:24px 0 8px 0; font-size:16px; color:#111827;">Datos para la factura</h2>
+{% for etiqueta, valor in datos_factura %}<p style="margin:0 0 4px 0; font-size:14px;"><strong>{{ etiqueta }}:</strong> {{ valor }}</p>
+{% endfor %}{% endif %}

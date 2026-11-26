@@ -1,0 +1,7 @@
+{% autoescape off %}Pausaste tu suscripción
+
+Tu suscripción al plan {{ plan.nombre }} quedó en pausa: no te enviaremos avisos de cobro ni entregas hasta que la reanudes desde tu cuenta.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

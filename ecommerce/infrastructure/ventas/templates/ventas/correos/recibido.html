@@ -1,0 +1,11 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Recibimos tu pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}¡Recibimos tu pedido #{{ orden.id }}!{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Gracias por comprar en {{ tienda }}. Tu pedido quedó registrado y está pendiente de pago:
+  te avisaremos por correo cuando el pago se confirme.
+</p>
+{% include "ventas/correos/_transferencia.html" %}
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

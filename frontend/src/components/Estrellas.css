@@ -1,0 +1,87 @@
+/* Calificación con estrellas (Estrellas.jsx). Las vacías llevan borde para distinguirse sin depender del color */
+.estrellas {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--color-primary);
+  vertical-align: middle;
+}
+
+.estrella {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.estrella--llena {
+  fill: currentColor;
+}
+
+/* Elegir estrellas (EstrellasEntrada.jsx): radios ocultos con una estrella grande como blanco táctil */
+.estrellas-entrada {
+  min-width: 0;
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+}
+
+.estrellas-entrada-leyenda {
+  margin-bottom: 6px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.estrellas-entrada-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.estrellas-entrada-opciones {
+  display: inline-flex;
+  color: var(--color-primary);
+}
+
+.estrellas-entrada-opcion {
+  position: relative;
+  display: inline-flex;
+  padding: 5px;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.estrellas-entrada-opcion:has(input:focus-visible) {
+  outline: 2px solid var(--color-text);
+  outline-offset: 0;
+}
+
+.estrellas-entrada-texto {
+  min-width: 5.5em;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.estrellas-entrada-quitar {
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .estrellas-entrada-opcion .estrella {
+    transition: fill 0.12s ease;
+  }
+}
+
+@media (forced-colors: active) {
+  .estrella--llena {
+    fill: CanvasText;
+  }
+}

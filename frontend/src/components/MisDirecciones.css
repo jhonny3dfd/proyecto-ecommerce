@@ -1,0 +1,253 @@
+/* Mis direcciones de envío del comprador con el estilo editorial */
+
+.direcciones-main {
+  min-height: 70vh;
+  padding: clamp(32px, 5vw, 64px) 0 var(--espacio-seccion);
+  background: var(--color-background);
+}
+
+.direcciones-main .contenedor {
+  max-width: calc(900px + 2 * var(--margen-lateral));
+}
+
+.direcciones-volver {
+  margin-bottom: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.direcciones-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.direcciones-titulo {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  margin: 0;
+}
+
+.direcciones-aviso {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+}
+
+.direcciones-aviso--error {
+  background: #FBEAE7;
+  color: #8A2418;
+}
+
+.direcciones-aviso--exito {
+  background: #E7F3EA;
+  color: #1E5631;
+}
+
+.direcciones-estado {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* ---------- Formulario ---------- */
+
+.direcciones-formulario {
+  margin-bottom: 32px;
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.direcciones-formulario h2 {
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+}
+
+.direcciones-formulario form {
+  display: grid;
+  gap: 18px;
+}
+
+.direcciones-fila {
+  display: flex;
+  gap: 16px;
+}
+
+.direcciones-campo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.direcciones-campo--ancho {
+  flex: 3;
+}
+
+.direcciones-campo label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.direcciones-campo input,
+.direcciones-campo select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.direcciones-campo input:focus-visible,
+.direcciones-campo select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.direcciones-casilla {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.direcciones-casilla input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+.direcciones-acciones-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ---------- Listado ---------- */
+
+.direcciones-lista {
+  display: grid;
+  gap: 16px;
+}
+
+.direccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.direccion--principal {
+  border: 2px solid var(--color-primary);
+  padding: 19px 23px;
+}
+
+.direccion-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 6px;
+}
+
+.direccion h3 {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  font-size: 1.05rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.direccion-chip {
+  padding: 3px 10px;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.direccion-detalle {
+  color: var(--color-muted);
+}
+
+.direccion-acciones {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.direccion-enlace {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.direccion-enlace:hover {
+  color: var(--color-primary);
+}
+
+.direccion-enlace--peligro {
+  color: #B91C1C;
+}
+
+.direccion-enlace--peligro:hover {
+  color: #8A2418;
+}
+
+.direcciones-vacio {
+  padding: 48px 24px;
+  border: 1px dashed var(--color-border);
+  background: var(--color-surface);
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.direcciones-vacio p {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .direcciones-fila {
+    flex-direction: column;
+  }
+
+  .direccion {
+    flex-direction: column;
+  }
+
+  .direccion-acciones {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .direcciones-acciones-formulario .boton,
+  .direcciones-encabezado .boton {
+    width: 100%;
+  }
+}

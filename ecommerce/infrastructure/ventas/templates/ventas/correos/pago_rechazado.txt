@@ -1,0 +1,6 @@
+{% autoescape off %}No se pudo completar el pago
+
+El medio de pago rechazó el pago de tu pedido #{{ orden.id }}, así que el pedido se canceló y no se
+realizó ningún cobro. Si quieres, puedes volver a intentar la compra en {{ tienda }}.
+
+{% include "ventas/correos/_resumen.txt" %}{% endautoescape %}

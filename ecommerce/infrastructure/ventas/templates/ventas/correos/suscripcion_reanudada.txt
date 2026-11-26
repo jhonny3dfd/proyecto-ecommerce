@@ -1,0 +1,7 @@
+{% autoescape off %}Reanudaste tu suscripción
+
+Tu suscripción al plan {{ plan.nombre }} está activa otra vez. Te avisaremos unos días antes de la próxima entrega.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

@@ -1,0 +1,51 @@
+/* Formulario de cotización: usa los campos del checkout (Checkout.css) en una sola columna */
+
+.cotizacion {
+  max-width: calc(720px + 2 * var(--margen-lateral));
+}
+
+.cotizacion-intro {
+  margin: -16px 0 32px;
+  max-width: 60ch;
+}
+
+/* Campos que el checkout no tiene */
+.cotizacion input[type='number'],
+.cotizacion input[type='date'],
+.cotizacion textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radio);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.cotizacion textarea {
+  resize: vertical;
+}
+
+.cotizacion input:focus-visible,
+.cotizacion textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.cotizacion-privacidad {
+  margin-bottom: 20px;
+}
+
+.cotizacion-enviar {
+  width: 100%;
+}
+
+/* Campo trampa contra el spam: fuera de la pantalla (un bot lo llena; una persona no lo ve) */
+.cotizacion-trampa {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

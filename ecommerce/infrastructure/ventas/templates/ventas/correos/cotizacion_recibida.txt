@@ -1,0 +1,7 @@
+{% autoescape off %}¡Recibimos tu solicitud de cotización #{{ cotizacion.id }}!
+
+Hola, {{ cotizacion.nombre }}. Gracias por escribirnos: {{ tienda }} revisará tu solicitud y te responderá a este
+correo o al {{ cotizacion.telefono }} con el precio y el plazo.
+
+{% include "ventas/correos/_cotizacion.txt" %}
+Si necesitas cambiar algo de tu solicitud, responde este correo.{% endautoescape %}

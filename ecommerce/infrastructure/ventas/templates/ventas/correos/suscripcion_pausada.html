@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Pausaste tu suscripción{% endblock %}
+{% block titulo_visible %}Pausaste tu suscripción{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Tu suscripción al plan <strong>{{ plan.nombre }}</strong> quedó en pausa: no te enviaremos avisos de cobro ni entregas hasta que la reanudes desde tu cuenta.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

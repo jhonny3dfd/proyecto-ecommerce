@@ -1,0 +1,64 @@
+/* Reseñas aprobadas (ListaResenas.jsx): en la landing y en la ficha del producto */
+
+.resenas-promedio {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+/* 3 por fila en escritorio, 2 en tablet y 1 en celular. La última fila incompleta se centra (ej. 4 o 5 reseñas):
+   en una grilla quedaba un hueco al final */
+.resenas-lista {
+  --resenas-por-fila: 3;
+  --resenas-espacio: clamp(16px, 2vw, 24px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--resenas-espacio);
+}
+
+.resena-tarjeta {
+  flex: 0 0 calc((100% - (var(--resenas-por-fila) - 1) * var(--resenas-espacio)) / var(--resenas-por-fila));
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.resena-tarjeta figure {
+  margin: 0;
+}
+
+.resena-tarjeta-texto {
+  margin: 14px 0 16px;
+}
+
+.resena-tarjeta-texto p {
+  margin: 0;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.resena-tarjeta-autor {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.resena-tarjeta-autor .texto-secundario {
+  font-weight: 400;
+}
+
+@media (max-width: 1023px) {
+  .resenas-lista {
+    --resenas-por-fila: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .resenas-lista {
+    --resenas-por-fila: 1;
+  }
+}

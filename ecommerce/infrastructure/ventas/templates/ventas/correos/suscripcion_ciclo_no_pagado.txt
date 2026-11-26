@@ -1,0 +1,7 @@
+{% autoescape off %}No recibimos el pago de tu entrega
+
+No recibimos a tiempo el pago de tu entrega de {{ plan.nombre }}, así que esta vez no la enviaremos. Tu suscripción sigue activa: te avisaremos antes de la próxima.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

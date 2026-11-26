@@ -1,0 +1,18 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Elige una nueva contraseña{% endblock %}
+{% block titulo_visible %}Elige una nueva contraseña{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Hola, {{ nombre }}. Recibimos una solicitud para elegir una nueva contraseña para tu cuenta en {{ tienda }}.
+  {% if sin_contrasena %}Hoy entras con Google: con este enlace también puedes crear una contraseña.{% endif %}
+</p>
+<p style="margin:20px 0;">
+  <a href="{{ url_restablecer }}" style="display:inline-block; padding:12px 22px; background-color:#1d4ed8; color:#ffffff; text-decoration:none; border-radius:6px; font-weight:bold;">Elegir nueva contraseña</a>
+</p>
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  El enlace vence en 1 hora y sirve una sola vez.
+</p>
+{% endblock %}
+{% block pie %}
+Si no lo pediste tú, ignora este correo: tu contraseña no cambia.
+{% endblock %}

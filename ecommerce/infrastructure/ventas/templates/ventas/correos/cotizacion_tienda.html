@@ -1,0 +1,14 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Nueva solicitud de cotización #{{ cotizacion.id }}{% endblock %}
+{% block titulo_visible %}Nueva solicitud de cotización{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 16px 0; font-size:15px; line-height:1.5;">
+  {{ cotizacion.nombre }} pidió una cotización{% if cotizacion.datos_empresa %} para {{ cotizacion.datos_empresa.razon_social }}{% endif %}.
+  Respóndele a <a href="mailto:{{ cotizacion.correo }}" style="color:#1d4ed8;">{{ cotizacion.correo }}</a>
+  (basta con responder este correo) o al {{ cotizacion.telefono }}.
+</p>
+{% include "ventas/correos/_cotizacion.html" %}
+{% endblock %}
+{% block pie %}
+Cuando la respondas, márcala como Respondida en el panel: <a href="{{ url_panel }}" style="color:#1d4ed8;">Cotizaciones</a>.
+{% endblock %}

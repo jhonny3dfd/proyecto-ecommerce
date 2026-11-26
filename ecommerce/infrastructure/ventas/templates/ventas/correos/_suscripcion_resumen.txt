@@ -1,0 +1,3 @@
+{% autoescape off %}Plan: {{ plan.nombre }} ({{ frecuencia }})
+Recibes: {{ unidades }} x {{ producto }}{% if proxima_entrega %}
+Próxima entrega: {{ proxima_entrega }}{% endif %}{% endautoescape %}

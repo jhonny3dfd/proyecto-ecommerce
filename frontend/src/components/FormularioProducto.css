@@ -1,0 +1,42 @@
+.formulario-producto { min-width: 0; overflow-wrap: anywhere; }
+.formulario-producto > div:first-child { flex-wrap: wrap; gap: 12px; }
+.formulario-producto .producto-campos {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+}
+/* Datos generales: la categoría comparte su columna con "+ Nueva" y las colecciones son un selector múltiple; con
+   columnas de 160 px el selector de categoría se cortaba ("Selecc…"). Las filas de las variantes siguen en 160 px */
+.formulario-producto .producto-campos--generales {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+.formulario-producto input,
+.formulario-producto textarea,
+.formulario-producto select,
+.producto-campos > div { min-width: 0; max-width: 100%; }
+@media (max-width: 600px) {
+  .formulario-producto .producto-campos { grid-template-columns: minmax(0, 1fr); }
+}
+.formulario-producto .campo-coleccion-container { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.formulario-producto .campo-coleccion-label { font-weight: bold; }
+.formulario-producto .campo-coleccion-ayuda { color: var(--color-muted); display: block; font-size: 0.875em; }
+.campo-exclusivo {
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.campo-exclusivo label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+}
+
+.campo-exclusivo input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+  flex: 0 0 auto;
+}

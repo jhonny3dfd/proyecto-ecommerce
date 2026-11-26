@@ -1,0 +1,7 @@
+{% autoescape off %}Cancelaste tu suscripción
+
+Tu suscripción al plan {{ plan.nombre }} quedó cancelada: no habrá más avisos ni entregas. Si ya habías pagado una entrega, te llegará igual. Gracias por haber sido parte de {{ tienda }}.
+
+{% include "ventas/correos/_suscripcion_resumen.txt" %}
+
+Tu suscripción: {{ url_suscripciones }}{% endautoescape %}

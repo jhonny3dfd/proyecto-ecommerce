@@ -1,0 +1,5 @@
+{% autoescape off %}{% for etiqueta, valor in detalle %}{{ etiqueta }}: {{ valor }}
+{% endfor %}{% if datos_factura %}
+DATOS PARA LA FACTURA
+{% for etiqueta, valor in datos_factura %}{{ etiqueta }}: {{ valor }}
+{% endfor %}{% endif %}{% endautoescape %}

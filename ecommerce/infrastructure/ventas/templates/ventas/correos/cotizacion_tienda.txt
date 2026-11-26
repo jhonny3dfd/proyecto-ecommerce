@@ -1,0 +1,8 @@
+{% autoescape off %}Nueva solicitud de cotización #{{ cotizacion.id }}
+
+{{ cotizacion.nombre }} pidió una cotización{% if cotizacion.datos_empresa %} para {{ cotizacion.datos_empresa.razon_social }}{% endif %}.
+Respóndele a {{ cotizacion.correo }} (basta con responder este correo) o al {{ cotizacion.telefono }}.
+
+{% include "ventas/correos/_cotizacion.txt" %}
+Cuando la respondas, márcala como Respondida en el panel (Cotizaciones):
+{{ url_panel }}{% endautoescape %}

@@ -1,0 +1,331 @@
+/* Suscripciones (pedido de un cliente, opcional): planes, suscribirse, Mis suscripciones y pagar una entrega.
+   Sobre los estilos del checkout (Checkout.css); los colores salen de la paleta, así cumplen AA en los 8 temas */
+
+.suscripcion-intro {
+  max-width: 62ch;
+  margin: 0 0 24px;
+}
+
+.suscripcion-volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+}
+
+/* ---------- Planes ---------- */
+
+.suscripcion-planes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 24px;
+}
+
+.suscripcion-plan {
+  display: flex;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.suscripcion-plan-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: clamp(24px, 3vw, 32px);
+}
+
+.suscripcion-plan-nombre {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+  overflow-wrap: anywhere;
+}
+
+.suscripcion-plan-descripcion,
+.suscripcion-plan-frecuencia {
+  margin: 0;
+}
+
+.suscripcion-plan-precio {
+  margin: 6px 0 0;
+}
+
+.suscripcion-plan-monto {
+  font-family: var(--fuente-titulos);
+  font-size: 2rem;
+  font-variant-numeric: lining-nums;
+}
+
+.suscripcion-plan-beneficios {
+  display: grid;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.92rem;
+}
+
+.suscripcion-plan-beneficios li::marker {
+  color: var(--color-primary);
+}
+
+/* El botón queda abajo aunque las tarjetas tengan textos de distinto largo, con aire sobre él */
+.suscripcion-plan-boton {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.suscripcion-plan-contenido > :nth-last-child(2) {
+  margin-bottom: 14px;
+}
+
+.suscripcion-sin-sesion {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  max-width: 60ch;
+}
+
+.suscripcion-sin-sesion p {
+  margin: 0;
+}
+
+/* ---------- Suscribirse: productos ---------- */
+
+.suscripcion-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.suscripcion-producto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  /* El fondo cambia junto al texto para conservar su contraste al elegir. */
+  transition: border-color var(--transicion);
+}
+
+.suscripcion-producto:hover {
+  border-color: var(--color-text);
+}
+
+.suscripcion-producto input {
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+}
+
+/* Elegido: invertido, como las opciones del checkout */
+.suscripcion-producto--elegido {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-background);
+}
+
+.suscripcion-producto--elegido .checkout-ayuda {
+  color: inherit;
+}
+
+.suscripcion-producto--agotado {
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.suscripcion-producto-foto {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  background: var(--color-secondary);
+}
+
+.suscripcion-producto-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.suscripcion-tipos-entrega {
+  flex-wrap: wrap;
+}
+
+.suscripcion-entrega-nota {
+  margin: 0 0 18px;
+}
+
+.suscripcion-cotizacion {
+  margin: 4px 0 18px;
+}
+
+.suscripcion-fecha {
+  margin: 0 0 16px;
+}
+
+.suscripcion-resumen-beneficios {
+  margin: 0 0 20px;
+}
+
+.suscripcion-faltante {
+  margin: 0 0 12px;
+}
+
+/* ---------- Mis suscripciones ---------- */
+
+.suscripcion-mias {
+  display: grid;
+  gap: 24px;
+  max-width: 860px;
+}
+
+.suscripcion-mia {
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.suscripcion-mia-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.suscripcion-estado {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--color-secondary);
+  color: var(--color-text);
+}
+
+.suscripcion-estado--activa {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.suscripcion-estado--cancelada {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+}
+
+.suscripcion-por-pagar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+
+.suscripcion-por-pagar p {
+  flex: 1 1 280px;
+  margin: 0;
+}
+
+.suscripcion-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: 14px 24px;
+  margin: 0 0 20px;
+}
+
+.suscripcion-datos dt {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.suscripcion-datos dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.suscripcion-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.suscripcion-acciones .boton {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.suscripcion-boton-cancelar {
+  margin-left: auto;
+}
+
+.suscripcion-cambiar {
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.suscripcion-cambiar-titulo {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+
+.suscripcion-cambiar-bloque {
+  margin: 20px 0;
+}
+
+.suscripcion-cambiar-bloque > legend.checkout-paso {
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.suscripcion-cambiar-actual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.suscripcion-boton-chico {
+  padding: 0.55rem 1rem;
+}
+
+/* ---------- Pagar una entrega ---------- */
+
+.suscripcion-pagar-resumen {
+  position: static;
+  max-width: 520px;
+}
+
+.suscripcion-pagar-resumen .checkout-total-linea--final {
+  padding-top: 0;
+  border-top: none;
+}
+
+.suscripcion-pagar-nota {
+  margin: 0 0 18px;
+}
+
+.suscripcion-pagar-volver {
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .suscripcion-boton-cancelar {
+    margin-left: 0;
+  }
+}

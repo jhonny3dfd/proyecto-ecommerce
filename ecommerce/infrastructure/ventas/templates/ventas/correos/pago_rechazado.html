@@ -1,0 +1,10 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}No se pudo completar el pago del pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}No se pudo completar el pago{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  El medio de pago rechazó el pago de tu pedido #{{ orden.id }}, así que el pedido se canceló y no se
+  realizó ningún cobro. Si quieres, puedes volver a intentar la compra en {{ tienda }}.
+</p>
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

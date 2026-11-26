@@ -1,0 +1,67 @@
+# Caddy de cada tienda: entrega el frontend compilado y las fotos, y pasa la API y el admin de Django al backend.
+# DIRECCION_SITIO:
+#   ":80" (por defecto) detrás de un proxy que termina el HTTPS (varias tiendas en un servidor).
+#   El dominio de la tienda (ej. "mitienda.cl" o "mitienda-prueba.duckdns.org") para que este Caddy obtenga y
+#   renueve el certificado HTTPS solo.
+#   Con "mitienda.cl, www.mitienda.cl" obtiene también el de www, que lleva al dominio principal (ver abajo).
+{
+	servers {
+		# Confía en el X-Forwarded-Proto del proxy de borde, que llega desde una red privada. Sin esto Caddy lo
+		# reemplaza por "http" y Django redirige a HTTPS en bucle (SECURE_SSL_REDIRECT)
+		trusted_proxies static private_ranges
+	}
+}
+
+{$DIRECCION_SITIO::80} {
+	# www.mitienda.cl lleva a mitienda.cl con la misma ruta: la tienda queda en una sola dirección, porque la sesión
+	# y el carrito del navegador se guardan por dirección (entrar por las dos los separaría)
+	@www header_regexp www Host ^www\.(.+)$
+	redir @www https://{re.www.1}{uri} permanent
+
+	encode zstd gzip
+
+	request_body {
+		# Hasta 10 fotos de 5 MB por subida (CATALOGO_IMAGEN_*), con margen
+		max_size 60MB
+	}
+
+	# Valores por defecto: Django pone los suyos en sus respuestas
+	header {
+                Strict-Transport-Security "max-age=31536000"
+		?X-Content-Type-Options nosniff
+		?Referrer-Policy strict-origin-when-cross-origin
+		?X-Frame-Options SAMEORIGIN
+		-Server
+	}
+
+	# "/admin/" es el admin de Django; "/admin" (sin barra) es el panel de la tienda en React
+	@backend path /api/* /admin/* /static/*
+	handle @backend {
+		reverse_proxy backend:8000
+	}
+
+	# Fotos subidas desde el panel (volumen de solo lectura). Se entregan como archivos, nunca como páginas
+	handle_path /media/* {
+		root * /srv/media
+		header Content-Security-Policy "default-src 'none'; sandbox"
+		file_server
+	}
+
+	# Los archivos de /assets/ llevan un hash en el nombre y nunca cambian. Uno que no existe (lo pide un navegador
+	# con la versión anterior) da 404: si devolviera index.html, quedaría guardado un año en lugar del JavaScript
+	handle /assets/* {
+		root * /srv/tienda
+		@existe file
+		header @existe Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	handle {
+		root * /srv/tienda
+		# index.html se revalida en cada visita, para que una versión nueva se vea de inmediato
+		header Cache-Control "no-cache"
+		# Las rutas de React (/catalogo, /admin...) devuelven index.html: recargar no da 404
+		try_files {path} /index.html
+		file_server
+	}
+}

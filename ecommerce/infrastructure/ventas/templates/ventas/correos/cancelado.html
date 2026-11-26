@@ -1,0 +1,17 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Tu pedido #{{ orden.id }} fue cancelado{% endblock %}
+{% block titulo_visible %}Tu pedido #{{ orden.id }} fue cancelado{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  {% if anulado_por_comprador %}
+    Anulaste el pago en el portal de pago, así que cancelamos el pedido y no se realizó ningún cobro.
+  {% elif pago_vencido %}
+    No recibimos el pago de tu transferencia dentro de las {{ plazo_pago_horas }} horas, así que cancelamos el pedido.
+    Si ya transferiste, contáctate con {{ tienda }} para revisarlo.
+  {% else %}
+    {{ tienda }} canceló tu pedido. Si ya habías pagado, la tienda se pondrá en contacto contigo
+    a este correo para coordinar la devolución.
+  {% endif %}
+</p>
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

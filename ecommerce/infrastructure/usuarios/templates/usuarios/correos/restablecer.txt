@@ -1,0 +1,11 @@
+{% autoescape off %}Elige una nueva contraseña
+
+Hola, {{ nombre }}. Recibimos una solicitud para elegir una nueva contraseña para tu cuenta en {{ tienda }}.
+{% if sin_contrasena %}Hoy entras con Google: con este enlace también puedes crear una contraseña.
+{% endif %}
+Elige tu nueva contraseña aquí:
+{{ url_restablecer }}
+
+El enlace vence en 1 hora y sirve una sola vez.
+
+Si no lo pediste tú, ignora este correo: tu contraseña no cambia.{% endautoescape %}

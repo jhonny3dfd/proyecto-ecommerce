@@ -1,0 +1,150 @@
+.footer {
+  margin-top: auto;
+  background: var(--color-footer);
+  color: #F3EFE9;
+  padding-top: clamp(48px, 6vw, 80px);
+}
+
+.footer-contenido {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 48px;
+}
+
+/* Con la columna de contacto: marca, tienda, legal y contacto */
+.footer-contenido--con-contacto {
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+}
+
+.footer-nombre {
+  font-family: var(--fuente-titulos);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+/* RN-01: con el logo de la Universidad en el footer, va aquí más grande que en el header (52 px). El logo es un
+   bloque rojo y gris con su propio fondo: se lee sobre el fondo oscuro sin placa */
+.footer-logo-universidad {
+  display: block;
+  height: 80px;
+  width: auto;
+  max-width: 100%;
+  margin-top: 20px;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .footer-logo-universidad {
+    height: 64px;
+  }
+}
+
+.footer-descripcion,
+.footer-aviso {
+  color: #B9B1A6;
+  font-size: 0.9rem;
+  max-width: 34ch;
+}
+
+/* Títulos de columna: chicos, en mayúsculas y espaciados (estilo Maison) */
+.footer-titulo {
+  font-family: var(--fuente-texto);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #B9B1A6;
+  margin: 0 0 18px;
+}
+
+.footer-columna ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.footer-columna a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: #F3EFE9;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.footer-columna a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footer :focus-visible {
+  outline-color: #F3EFE9;
+}
+
+.footer .cookie-preferences-button {
+  margin-top: 16px;
+  border-color: #B9B1A6;
+  color: #F3EFE9;
+  border-radius: var(--radio);
+}
+
+/* ---------- Contacto ---------- */
+
+.footer-contacto {
+  display: grid;
+  gap: 14px;
+  font-style: normal;
+  font-size: 0.9rem;
+}
+
+.footer-linea,
+.footer-etiqueta {
+  display: block;
+}
+
+.footer-etiqueta {
+  margin-bottom: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #B9B1A6;
+}
+
+/* Cada línea que escribió el admin se respeta */
+.footer-horario {
+  display: block;
+  white-space: pre-line;
+}
+
+.footer-contacto a {
+  gap: 8px;
+  min-height: 24px;
+  overflow-wrap: anywhere;
+}
+
+.footer-pie {
+  border-top: 1px solid rgb(243 239 233 / 15%);
+  padding-top: 20px;
+  padding-bottom: 24px;
+  font-size: 0.8rem;
+  color: #B9B1A6;
+}
+
+@media (max-width: 1023px) {
+  .footer-contenido--con-contacto {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer-contenido,
+  .footer-contenido--con-contacto {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

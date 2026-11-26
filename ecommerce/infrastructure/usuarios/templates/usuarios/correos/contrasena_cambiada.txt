@@ -1,0 +1,9 @@
+{% autoescape off %}Tu contraseña cambió
+
+Hola, {{ nombre }}. La contraseña de tu cuenta en {{ tienda }} se acaba de cambiar. Si fuiste tú, no tienes que
+hacer nada.
+
+Si no fuiste tú, elige una nueva ahora mismo:
+{{ url_recuperar }}
+
+Te enviamos este aviso cada vez que cambia la contraseña de tu cuenta.{% endautoescape %}

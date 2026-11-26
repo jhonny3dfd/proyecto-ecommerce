@@ -1,0 +1,5 @@
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:16px 0; font-size:14px;">
+  <tr><td style="padding:2px 12px 2px 0; color:#4b5563;">Plan</td><td style="padding:2px 0; font-weight:bold;">{{ plan.nombre }} ({{ frecuencia }})</td></tr>
+  <tr><td style="padding:2px 12px 2px 0; color:#4b5563;">Recibes</td><td style="padding:2px 0; font-weight:bold;">{{ unidades }} x {{ producto }}</td></tr>
+  {% if proxima_entrega %}<tr><td style="padding:2px 12px 2px 0; color:#4b5563;">Próxima entrega</td><td style="padding:2px 0; font-weight:bold;">{{ proxima_entrega }}</td></tr>{% endif %}
+</table>

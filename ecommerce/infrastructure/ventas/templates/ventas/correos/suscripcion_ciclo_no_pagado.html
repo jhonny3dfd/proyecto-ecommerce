@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}No recibimos el pago de tu entrega{% endblock %}
+{% block titulo_visible %}No recibimos el pago de tu entrega{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">No recibimos a tiempo el pago de tu entrega de <strong>{{ plan.nombre }}</strong>, así que esta vez no la enviaremos. Tu suscripción sigue activa: te avisaremos antes de la próxima.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

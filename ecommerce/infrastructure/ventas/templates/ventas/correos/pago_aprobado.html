@@ -1,0 +1,10 @@
+{% extends "ventas/correos/base.html" %}
+{% block titulo %}Pago confirmado: pedido #{{ orden.id }}{% endblock %}
+{% block titulo_visible %}¡Pago confirmado!{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">
+  Recibimos el pago de tu pedido #{{ orden.id }}. Ahora lo prepararemos y te avisaremos por correo
+  cuando salga a despacho o esté listo para retirar.
+</p>
+{% include "ventas/correos/_resumen.html" %}
+{% endblock %}

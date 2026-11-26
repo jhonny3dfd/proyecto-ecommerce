@@ -1,0 +1,397 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Ecode - Endpoints de acceso",
+    "version": "1.0.0",
+    "description": "Contrato de los endpoints de autenticación implementados en el backend Django REST Framework. Registro y Google devuelven los JWT dentro de `tokens`; el login tradicional de SimpleJWT los devuelve como `access` y `refresh` en el nivel superior."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Backend local de desarrollo"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Acceso",
+      "description": "Registro, autenticación tradicional, Google SSO y renovación de JWT."
+    }
+  ],
+  "paths": {
+    "/usuarios/registro/": {
+      "post": {
+        "operationId": "registrarUsuario",
+        "summary": "Registrar un usuario y emitir JWT",
+        "description": "Crea el usuario mediante RegistroUsuarioSerializer. `password` y `password2` deben coincidir y se aplican los validadores de contraseña configurados por Django. El rol predeterminado es COMPRADOR.",
+        "tags": ["Acceso"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/RegistroRequest"},
+              "example": {
+                "email": "ana@example.com",
+                "nombre": "Ana",
+                "apellido_paterno": "Pérez",
+                "apellido_materno": "Soto",
+                "telefono": "+56912345678",
+                "acepta_cookies": true,
+                "password": "Clave-Segura-938!",
+                "password2": "Clave-Segura-938!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario registrado y par JWT emitido.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/RegistroResponse"},
+                "example": {
+                  "message": "Usuario registrado exitosamente.",
+                  "user": {
+                    "id": 1,
+                    "email": "ana@example.com",
+                    "nombre": "Ana",
+                    "rol": "COMPRADOR"
+                  },
+                  "tokens": {
+                    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/ValidationError"}
+        }
+      }
+    },
+    "/usuarios/token/": {
+      "post": {
+        "operationId": "obtenerTokenJwt",
+        "summary": "Iniciar sesión con email y contraseña",
+        "description": "Endpoint TokenObtainPairView de SimpleJWT. Usa el email como identificador porque Usuario.USERNAME_FIELD es `email`.",
+        "tags": ["Acceso"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/LoginRequest"},
+              "example": {
+                "email": "ana@example.com",
+                "password": "Clave-Segura-938!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Credenciales válidas; devuelve el par JWT de SimpleJWT.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/TokenPair"},
+                "example": {
+                  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/ValidationError"},
+          "401": {"$ref": "#/components/responses/AuthenticationError"}
+        }
+      }
+    },
+    "/usuarios/google/": {
+      "post": {
+        "operationId": "loginGoogle",
+        "summary": "Autenticar con Google y emitir JWT",
+        "description": "Verifica `id_token` con GoogleAuthService. Si el email aún no existe crea un usuario COMPRADOR con contraseña inutilizable; si existe, completa `google_sso_id` cuando falta. Tanto para usuario nuevo como existente responde 200.",
+        "tags": ["Acceso"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/GoogleLoginRequest"},
+              "example": {
+                "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ii4uLiJ9..."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticación Google exitosa y par JWT emitido.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/GoogleLoginResponse"},
+                "example": {
+                  "message": "Autenticación Google exitosa.",
+                  "user": {
+                    "id": 2,
+                    "email": "ana@gmail.com",
+                    "nombre": "Ana",
+                    "rol": "COMPRADOR",
+                    "google_sso_id": "109876543210987654321"
+                  },
+                  "tokens": {
+                    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta `id_token`, el body es inválido o la cuenta Google no entrega email.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {"$ref": "#/components/schemas/FieldErrors"},
+                    {"$ref": "#/components/schemas/DetailError"}
+                  ]
+                },
+                "examples": {
+                  "missingToken": {
+                    "summary": "Campo requerido ausente",
+                    "value": {"id_token": ["Este campo es requerido."]}
+                  },
+                  "missingEmail": {
+                    "summary": "Google no entregó email",
+                    "value": {
+                      "detail": "La cuenta de Google no tiene un email público asociado."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "El ID token de Google es inválido o expiró.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/DetailError"},
+                "example": {
+                  "detail": "Token de Google inválido o expirado: Invalid token signature"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuarios/token/refresh/": {
+      "post": {
+        "operationId": "renovarTokenJwt",
+        "summary": "Renovar el token de acceso",
+        "description": "Endpoint TokenRefreshView de SimpleJWT. Con ROTATE_REFRESH_TOKENS=false devuelve un nuevo access y conserva el refresh presentado.",
+        "tags": ["Acceso"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "#/components/schemas/TokenRefreshRequest"},
+              "example": {
+                "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Nuevo token de acceso emitido.",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/AccessTokenResponse"},
+                "example": {
+                  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              }
+            }
+          },
+          "400": {"$ref": "#/components/responses/ValidationError"},
+          "401": {"$ref": "#/components/responses/AuthenticationError"}
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enviar el access token como `Authorization: Bearer <access>`."
+      }
+    },
+    "schemas": {
+      "RegistroRequest": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string", "format": "email", "maxLength": 255},
+          "nombre": {"type": "string", "maxLength": 255},
+          "apellido_paterno": {"type": "string", "maxLength": 255},
+          "apellido_materno": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Opcional según el serializer actual."
+          },
+          "telefono": {"type": "string", "nullable": true, "maxLength": 20},
+          "rol": {
+            "type": "string",
+            "enum": ["ADMIN", "COMPRADOR"],
+            "default": "COMPRADOR",
+            "description": "Campo opcional expuesto por el serializer actual."
+          },
+          "acepta_cookies": {"type": "boolean", "default": false},
+          "password": {"type": "string", "format": "password", "writeOnly": true},
+          "password2": {
+            "type": "string",
+            "format": "password",
+            "writeOnly": true,
+            "description": "Debe coincidir exactamente con password."
+          }
+        },
+        "required": ["email", "nombre", "apellido_paterno", "password", "password2"]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {"type": "string", "format": "email"},
+          "password": {"type": "string", "format": "password", "writeOnly": true}
+        },
+        "required": ["email", "password"]
+      },
+      "GoogleLoginRequest": {
+        "type": "object",
+        "properties": {
+          "id_token": {
+            "type": "string",
+            "minLength": 1,
+            "writeOnly": true,
+            "description": "ID token emitido por Google Identity Services."
+          }
+        },
+        "required": ["id_token"]
+      },
+      "TokenRefreshRequest": {
+        "type": "object",
+        "properties": {
+          "refresh": {"type": "string", "minLength": 1, "writeOnly": true}
+        },
+        "required": ["refresh"]
+      },
+      "TokenPair": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "refresh": {"type": "string", "readOnly": true},
+          "access": {"type": "string", "readOnly": true}
+        },
+        "required": ["refresh", "access"]
+      },
+      "AccessTokenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "access": {"type": "string", "readOnly": true}
+        },
+        "required": ["access"]
+      },
+      "BasicUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "integer"},
+          "email": {"type": "string", "format": "email"},
+          "nombre": {"type": "string"},
+          "rol": {"type": "string"}
+        },
+        "required": ["id", "email", "nombre", "rol"]
+      },
+      "GoogleUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "integer"},
+          "email": {"type": "string", "format": "email"},
+          "nombre": {"type": "string"},
+          "rol": {"type": "string"},
+          "google_sso_id": {"type": "string", "nullable": true}
+        },
+        "required": ["id", "email", "nombre", "rol", "google_sso_id"]
+      },
+      "RegistroResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {"type": "string"},
+          "user": {"$ref": "#/components/schemas/BasicUser"},
+          "tokens": {"$ref": "#/components/schemas/TokenPair"}
+        },
+        "required": ["message", "user", "tokens"]
+      },
+      "GoogleLoginResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {"type": "string"},
+          "user": {"$ref": "#/components/schemas/GoogleUser"},
+          "tokens": {"$ref": "#/components/schemas/TokenPair"}
+        },
+        "required": ["message", "user", "tokens"]
+      },
+      "FieldErrors": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "example": {
+          "email": ["Ya existe un usuario con este email."]
+        }
+      },
+      "DetailError": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "detail": {"type": "string"},
+          "code": {"type": "string"}
+        },
+        "required": ["detail"]
+      }
+    },
+    "responses": {
+      "ValidationError": {
+        "description": "Body inválido, campo requerido ausente o validación fallida; en registro incluye email duplicado o contraseñas distintas.",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/FieldErrors"},
+            "example": {
+              "email": ["Ya existe un usuario con este email."]
+            }
+          }
+        }
+      },
+      "AuthenticationError": {
+        "description": "Credenciales incorrectas, cuenta inactiva o JWT inválido/expirado.",
+        "content": {
+          "application/json": {
+            "schema": {"$ref": "#/components/schemas/DetailError"},
+            "example": {
+              "detail": "No active account found with the given credentials",
+              "code": "no_active_account"
+            }
+          }
+        }
+      }
+    }
+  }
+}

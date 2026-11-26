@@ -1,0 +1,12 @@
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; border-collapse:collapse;">
+  {% for etiqueta, valor in detalle %}
+  <tr>
+    <td style="padding:6px 12px 6px 0; color:#4b5563; vertical-align:top; white-space:nowrap;">{{ etiqueta }}</td>
+    <td style="padding:6px 0; vertical-align:top;">{{ valor|linebreaksbr }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% if datos_factura %}
+<h2 style="margin:24px 0 8px 0; font-size:16px; color:#111827;">Datos para la factura</h2>
+{% for etiqueta, valor in datos_factura %}<p style="margin:0 0 4px 0; font-size:14px;"><strong>{{ etiqueta }}:</strong> {{ valor }}</p>
+{% endfor %}{% endif %}

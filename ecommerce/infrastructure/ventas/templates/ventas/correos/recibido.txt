@@ -1,0 +1,9 @@
+{% autoescape off %}¡Recibimos tu pedido #{{ orden.id }}!
+
+Gracias por comprar en {{ tienda }}. Tu pedido quedó registrado y está pendiente de pago:
+te avisaremos por correo cuando el pago se confirme.
+
+{% include "ventas/correos/_transferencia.txt" %}{% include "ventas/correos/_resumen.txt" %}
+
+Revisa el estado de tu pedido con tu número de orden (#{{ orden.id }}) y este correo en:
+{{ url_seguimiento }}{% endautoescape %}

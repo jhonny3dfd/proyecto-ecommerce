@@ -1,0 +1,15 @@
+{% autoescape off %}RESUMEN DE TU COMPRA
+{% for detalle in detalles %}- {{ detalle.nombre }}: {{ detalle.cantidad }} x {{ detalle.precio_unitario }} = {{ detalle.total }}
+{% endfor %}
+Subtotal: {{ subtotal }}
+Envío: {{ costo_envio }}
+Total: {{ total }}
+
+Entrega: {{ entrega }}{% if aviso_entrega_coordinada %}
+{{ aviso_entrega_coordinada }}{% endif %}{% if orden.nombre_destinatario %}
+Recibe: {{ orden.nombre_destinatario }}{% if orden.telefono_destinatario %} ({{ orden.telefono_destinatario }}){% endif %}{% endif %}
+Medio de pago: {{ metodo_pago }}{% if datos_factura %}
+
+DATOS PARA LA FACTURA
+{% for etiqueta, valor in datos_factura %}{{ etiqueta }}: {{ valor }}
+{% endfor %}{% endif %}{% endautoescape %}

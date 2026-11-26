@@ -1,0 +1,30 @@
+/* Spinner de un botón que espera al servidor: toma el color del texto del botón, y con él su contraste */
+.spinner {
+  display: inline-block;
+  flex: none;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+  margin-inline-end: 0.5em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  vertical-align: -0.15em;
+  animation: spinner-giro 0.7s linear infinite;
+}
+
+/* .boton ya separa su contenido con gap */
+.boton .spinner {
+  margin-inline-end: 0;
+}
+
+@keyframes spinner-giro {
+  to { transform: rotate(360deg); }
+}
+
+/* Con "reducir movimiento" queda un arco fijo; el texto del botón ya dice que está trabajando */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}

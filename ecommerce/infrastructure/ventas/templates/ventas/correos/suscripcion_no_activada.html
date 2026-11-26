@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Tu suscripción no se activó{% endblock %}
+{% block titulo_visible %}Tu suscripción no se activó{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">No recibimos a tiempo el pago de tu primera entrega del plan <strong>{{ plan.nombre }}</strong>, así que la suscripción no se activó. Si todavía te interesa, puedes suscribirte de nuevo cuando quieras.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}

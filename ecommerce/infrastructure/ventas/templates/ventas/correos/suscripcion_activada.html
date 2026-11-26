@@ -1,0 +1,7 @@
+{% extends "ventas/correos/_base_suscripcion.html" %}
+{% block titulo %}Tu suscripción está activa{% endblock %}
+{% block titulo_visible %}Tu suscripción está activa{% endblock %}
+{% block contenido %}
+<p style="margin:0 0 12px 0; font-size:15px; line-height:1.5;">Recibimos el pago de tu primera entrega en {{ tienda }}. Tu suscripción al plan <strong>{{ plan.nombre }}</strong> ya está activa: unos días antes de cada entrega te escribiremos para que pagues la siguiente.</p>
+{% include "ventas/correos/_suscripcion_resumen.html" %}
+{% endblock %}
